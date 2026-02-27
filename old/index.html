@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrategia de Adopción de IA: SDLC Agéntico</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Configuration & Custom Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#F5F5F0',       // Warm neutral background (Off-white/Beige)
+                            surface: '#FFFFFF',  // White surface
+                            primary: '#2C3E50',  // Navy Blue (Professionalism/Trust)
+                            accent: '#38B2AC',   // Teal (Modern/AI)
+                            highlight: '#E76F51', // Soft Coral (Action/Alert)
+                            text: '#1A202C',     // Dark gray text
+                            muted: '#718096'     // Muted text
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS Reset & Basics */
+        body {
+            background-color: #F5F5F0;
+            color: #1A202C;
+        }
+
+        /* Chart Container Styling - MANDATORY REQUIREMENT */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            /* Constraints width on large screens */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            /* Base height */
+            max-height: 400px;
+        }
+
+        .chart-container-large {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 400px;
+            max-height: 500px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Utilities */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #CBD5E0;
+            z-index: 0;
+        }
+
+        .nav-active {
+            border-bottom: 2px solid #38B2AC;
+            color: #2C3E50;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+
+    <!-- Application Structure Plan -->
+    <!-- 
+    Application Structure Plan:
+    The SPA is designed as a "Strategic Dashboard" to guide decision-makers through the AI adoption process.
+    1. Header/Hero: Establishes the high-level goal (SDLC Agentic) and core value proposition.
+    2. Executive Summary (KPI Dashboard): Immediate visual access to the projected ROI (Productivity, Tech Debt) using charts to grab attention.
+    3. Interactive Roadmap (The Journey): A vertical interactive timeline representing the 4 phases. Clicking a phase reveals deep details, preventing information overload.
+    4. Tech Stack Matrix: A filterable grid allowing users to explore tools by category (IDE, Reasoning, Legacy, etc.) without clutter.
+    5. Role Transformation: A comparative view (Junior vs Senior) to address the human capital aspect, crucial in the report.
+    6. Financials: A dedicated budget section with a visualization of cost distribution.
+    7. Governance & Ethics: A concluding section on policies to ensure responsible adoption.
+    This flow moves from "Why" -> "What" -> "How" -> "Who" -> "How Much", facilitating a logical narrative.
+    -->
+
+    <!-- Chosen Palette: Calm Harmony (Warm Neutral Background #F5F5F0, Navy #2C3E50, Teal #38B2AC, Coral #E76F51) -->
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-brand-surface/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold font-display">
+                        IA</div>
+                    <span class="font-display font-bold text-xl text-brand-primary tracking-tight">Estrategia SDLC
+                        2026</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="scrollToSection('dashboard')"
+                        class="text-gray-600 hover:text-brand-primary text-sm font-medium transition-colors">Impacto</button>
+                    <button onclick="scrollToSection('roadmap')"
+                        class="text-gray-600 hover:text-brand-primary text-sm font-medium transition-colors">Roadmap</button>
+                    <button onclick="scrollToSection('stack')"
+                        class="text-gray-600 hover:text-brand-primary text-sm font-medium transition-colors">Tecnología</button>
+                    <button onclick="scrollToSection('people')"
+                        class="text-gray-600 hover:text-brand-primary text-sm font-medium transition-colors">Talento</button>
+                    <button onclick="scrollToSection('budget')"
+                        class="text-gray-600 hover:text-brand-primary text-sm font-medium transition-colors">Presupuesto</button>
+                </div>
+                <!-- Mobile Menu Button (Simplified) -->
+                <div class="md:hidden">
+                    <button class="text-brand-primary font-bold">☰</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- Header / Introduction -->
+        <header class="text-center max-w-4xl mx-auto">
+            <span
+                class="inline-block px-3 py-1 bg-brand-accent/10 text-brand-accent text-sm font-semibold rounded-full mb-4">Propuesta
+                Estratégica 2025-2026</span>
+            <h1 class="text-4xl md:text-5xl font-display font-bold text-brand-primary mb-6 leading-tight">
+                Adopción Orgánica de IA en Ingeniería
+            </h1>
+            <p class="text-xl text-gray-600 leading-relaxed">
+                Transformando el desarrollo de software hacia un modelo <strong>Agéntico</strong>.
+                No es solo autocompletado; es modernización de sistemas legacy, capacitación de talento y optimización
+                del ciclo de vida.
+            </p>
+        </header>
+
+        <!-- Section 1: KPI Dashboard (Impact) -->
+        <!-- Visualization & Content Choices: 
+             Goal: Inform & Motivate.
+             Viz: Bar Chart for productivity comparison & Donut for Debt reduction.
+             Why: Managers need to see the projected ROI immediately. Chart.js is perfect for clean, comparative data.
+        -->
+        <section id="dashboard" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h2 class="text-2xl font-display font-bold text-brand-primary mb-4">Impacto Proyectado</h2>
+                    <p class="text-gray-600 mb-6">
+                        La integración estratégica de agentes de IA no busca reemplazar desarrolladores, sino eliminar
+                        el "toil" (trabajo repetitivo).
+                        Se estima un retorno de inversión superior a <strong>$200k anuales</strong> mediante la
+                        recuperación de tiempo.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-2xl mr-3">🚀</span>
+                            <div>
+                                <strong class="block text-gray-900">Incremento de Productividad</strong>
+                                <span class="text-brand-accent font-bold text-lg">+25% a 40%</span>
+                                <span class="text-sm text-gray-500 block">En velocidad de entrega de nuevas
+                                    funcionalidades.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-2xl mr-3">📉</span>
+                            <div>
+                                <strong class="block text-gray-900">Reducción de Deuda Técnica</strong>
+                                <span class="text-brand-accent font-bold text-lg">Hasta 60%</span>
+                                <span class="text-sm text-gray-500 block">Mediante modernización automática de módulos
+                                    legacy.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Chart 1: Productivity Impact -->
+                <div class="flex flex-col justify-center bg-brand-bg/50 rounded-xl p-6">
+                    <h3 class="text-center font-semibold text-gray-700 mb-4">Comparativa de Eficiencia Operativa</h3>
+                    <div class="chart-container">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Interactive Roadmap (Timeline) -->
+        <!-- Visualization & Content Choices:
+             Goal: Change/Process.
+             Viz: Vertical Stepper with clickable interaction.
+             Why: A 12-month plan is linear. Users need to understand the sequence. Clicking a phase updates the details panel to focus attention.
+        -->
+        <section id="roadmap">
+            <div class="mb-8">
+                <h2 class="text-3xl font-display font-bold text-brand-primary mb-2">Roadmap de Implementación (12 Meses)
+                </h2>
+                <p class="text-gray-600">Un plan estructurado en 4 fases para garantizar gobernanza y escalabilidad.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Navigation Steps -->
+                <div class="lg:col-span-4 space-y-4">
+                    <div id="phase-buttons" class="flex flex-col gap-4">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Detail Panel -->
+                <div class="lg:col-span-8">
+                    <div id="phase-detail"
+                        class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 h-full transition-all duration-300">
+                        <!-- Content injected by JS -->
+                        <div class="flex items-center justify-center h-full text-gray-400">
+                            Selecciona una fase para ver detalles
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Tech Stack Matrix -->
+        <!-- Visualization & Content Choices:
+             Goal: Organize.
+             Viz: Filterable Cards (HTML/JS).
+             Why: The report lists specific tools (Cursor, Claude, Amazon Q). Categorizing them allows users to find tools relevant to specific tasks (Coding vs Modernization).
+        -->
+        <section id="stack" class="py-10">
+            <h2 class="text-3xl font-display font-bold text-brand-primary mb-6 text-center">Stack Tecnológico
+                Recomendado</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+                Selección de herramientas líderes para 2025-2026, equilibrando potencia en la nube y privacidad local.
+            </p>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button
+                    class="stack-filter active px-5 py-2 rounded-full text-sm font-semibold bg-brand-primary text-white shadow-md hover:opacity-90 transition"
+                    data-filter="all">Todos</button>
+                <button
+                    class="stack-filter px-5 py-2 rounded-full text-sm font-semibold bg-white text-gray-600 border border-gray-200 hover:border-brand-accent hover:text-brand-accent transition"
+                    data-filter="IDE">Asistentes IDE</button>
+                <button
+                    class="stack-filter px-5 py-2 rounded-full text-sm font-semibold bg-white text-gray-600 border border-gray-200 hover:border-brand-accent hover:text-brand-accent transition"
+                    data-filter="Reasoning">Razonamiento</button>
+                <button
+                    class="stack-filter px-5 py-2 rounded-full text-sm font-semibold bg-white text-gray-600 border border-gray-200 hover:border-brand-accent hover:text-brand-accent transition"
+                    data-filter="Modernization">Modernización Legacy</button>
+                <button
+                    class="stack-filter px-5 py-2 rounded-full text-sm font-semibold bg-white text-gray-600 border border-gray-200 hover:border-brand-accent hover:text-brand-accent transition"
+                    data-filter="Docs">Documentación</button>
+            </div>
+
+            <!-- Grid -->
+            <div id="tech-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- Section 4: Talent & Culture (Juniors vs Seniors) -->
+        <!-- Visualization & Content Choices:
+             Goal: Compare.
+             Viz: Two-column layout with distinct styling for roles.
+             Why: The report highlights the "Junior skill atrophy" risk. A side-by-side comparison makes the training objectives clear.
+        -->
+        <section id="people" class="bg-brand-primary rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <!-- Decorative circle -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-brand-accent/20 blur-3xl"></div>
+
+            <div class="relative z-10">
+                <h2 class="text-3xl font-display font-bold mb-8 text-center">Plan de Formación por Roles</h2>
+                <p class="text-center text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Evitar la "Atrofia de Habilidades" es la prioridad. La IA cambia el rol del desarrollador: de
+                    escritor de código a arquitecto y auditor.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Junior -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🌱</span>
+                            <h3 class="text-xl font-bold">Desarrolladores Junior</h3>
+                        </div>
+                        <ul class="space-y-3 text-gray-200 text-sm">
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> <strong>Objetivo:</strong>
+                                Mantener capacidad crítica y primeros principios.</li>
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> Lectura de código generado
+                                por IA (Auditoría).</li>
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> Debugging asistido, no
+                                automático.</li>
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> <strong>Prompt
+                                    Engineering:</strong> Descomposición de problemas.</li>
+                            <li class="flex gap-2"><span class="text-brand-highlight">⚠</span> Evitar el "Vibe Coding"
+                                (codear sin entender).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Senior -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-3xl">🧠</span>
+                            <h3 class="text-xl font-bold">Seniors / Arquitectos</h3>
+                        </div>
+                        <ul class="space-y-3 text-gray-200 text-sm">
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> <strong>Objetivo:</strong>
+                                Orquestación de sistemas y Agentes.</li>
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> Diseño de sistemas
+                                "AI-native".</li>
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> Gestión de contexto (RAG
+                                para código).</li>
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> Revisión de seguridad en
+                                código generado.</li>
+                            <li class="flex gap-2"><span class="text-brand-accent">✓</span> Definición de "AI
+                                Champions".</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Budget -->
+        <!-- Visualization & Content Choices:
+             Goal: Inform/Analyze.
+             Viz: Donut Chart + Table.
+             Why: Breakdown of costs helps justify the investment ($52k-$68k). Donut chart visualizes where the money goes (mostly tools and consulting).
+        -->
+        <section id="budget" class="py-10">
+            <h2 class="text-3xl font-display font-bold text-brand-primary mb-6 text-center">Estimación Presupuestaria
+                Anual</h2>
+            <p class="text-center text-gray-600 mb-8">Calculado para un equipo estándar de 50 desarrolladores.</p>
+
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <!-- Budget Table -->
+                <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                    <table class="min-w-full divide-y divide-gray-200 bg-white">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Concepto</th>
+                                <th
+                                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Costo (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-sm">
+                            <tr>
+                                <td class="px-6 py-4 text-gray-900 font-medium">Licencias (Cursor/Copilot)</td>
+                                <td class="px-6 py-4 text-right text-gray-600">$23,000</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-gray-900 font-medium">Consultoría / Setup</td>
+                                <td class="px-6 py-4 text-right text-gray-600">$20,000</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-gray-900 font-medium">Formación & Certs</td>
+                                <td class="px-6 py-4 text-right text-gray-600">$15,000</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-gray-900 font-medium">API Créditos (Agentes)</td>
+                                <td class="px-6 py-4 text-right text-gray-600">$10,000</td>
+                            </tr>
+                            <tr class="bg-brand-bg">
+                                <td class="px-6 py-4 text-brand-primary font-bold text-base">TOTAL MAX. ESTIMADO</td>
+                                <td class="px-6 py-4 text-right text-brand-primary font-bold text-base">$68,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Budget Chart -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+                    <h3 class="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wide">Distribución de
+                        Inversión</h3>
+                    <div class="chart-container">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Consultant Recommendations (Governance) -->
+        <section id="governance" class="border-t border-gray-200 pt-10">
+            <h2 class="text-2xl font-display font-bold text-brand-primary mb-6">Recomendaciones Críticas y Gobernanza
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl border-l-4 border-brand-highlight shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2">Human-in-the-loop</h3>
+                    <p class="text-sm text-gray-600">Nunca permitir merge directo a producción sin revisión humana
+                        experta. Cuidado con el "espejismo de corrección".</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border-l-4 border-brand-accent shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2">Regla 80/20</h3>
+                    <p class="text-sm text-gray-600">Dedicar 20% del tiempo a resolver problemas SIN IA para mantener
+                        habilidades fundamentales.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border-l-4 border-brand-primary shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2">Contexto es Rey</h3>
+                    <p class="text-sm text-gray-600">La efectividad depende de la documentación actualizada y estándares
+                        de arquitectura claros.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border-l-4 border-gray-400 shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2">Modernización Gradual</h3>
+                    <p class="text-sm text-gray-600">No refactorizar todo de golpe. Empezar con módulos de baja
+                        criticidad para validar agentes.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-brand-primary text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="font-display font-bold text-2xl mb-2">Propuesta Consultoría IA 2026</p>
+            <p class="text-gray-400 text-sm">Basado en el informe estratégico de Adopción Orgánica.</p>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-xs text-gray-500">
+                <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+                &copy; 2026 Consultoría de Ingeniería.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Store based on Source Report
+        const reportData = {
+            phases: [
+                {
+                    id: 1,
+                    title: "Fase 1: Diagnóstico y Gobernanza",
+                    time: "Mes 1-2",
+                    icon: "🔍",
+                    details: [
+                        "<strong>Auditoría de Deuda Técnica:</strong> Identificación de módulos legacy (Java, .NET) para modernización.",
+                        "<strong>Marco Ético:</strong> Definición de políticas 'IA Responsable' y privacidad.",
+                        "<strong>AI Champions:</strong> Selección de líderes técnicos seniors para guiar la adopción."
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Fase 2: Capacitación (Upskilling)",
+                    time: "Mes 2-4",
+                    icon: "🎓",
+                    details: [
+                        "<strong>Nivelación Juniors:</strong> Prompt Engineering avanzado y descomposición lógica.",
+                        "<strong>Especialización Seniors:</strong> Validación agéntica y arquitectura AI-native.",
+                        "<strong>Certificaciones:</strong> AWS Certified AI Practitioner, Azure AI Engineer."
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Fase 3: Despliegue de Herramientas",
+                    time: "Mes 3-6",
+                    icon: "🛠️",
+                    details: [
+                        "<strong>IDE Assistants:</strong> Licencias corporativas (Cursor/Copilot).",
+                        "<strong>Agentes Modernización:</strong> Amazon Q Developer para refactorización masiva.",
+                        "<strong>Test Auto:</strong> Validación autónoma en pipelines CI/CD."
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "Fase 4: Optimización y Medición",
+                    time: "Mes 6-12",
+                    icon: "📈",
+                    details: [
+                        "<strong>Métricas (Jellyfish):</strong> Velocidad de entrega vs Calidad.",
+                        "<strong>Mejora Continua:</strong> Ajuste de flujos basado en feedback real.",
+                        "<strong>Escalado:</strong> Expansión a todos los equipos."
+                    ]
+                }
+            ],
+            techStack: [
+                { name: "Cursor / GitHub Copilot", category: "IDE", desc: "Autocompletado y chat en contexto." },
+                { name: "Claude 3.7 / DeepSeek V3", category: "Reasoning", desc: "Lógica compleja y arquitectura." },
+                { name: "Amazon Q Developer", category: "Modernization", desc: "Refactorización masiva legacy." },
+                { name: "Moderne", category: "Modernization", desc: "Actualización automática de frameworks." },
+                { name: "Mintlify / Swimm", category: "Docs", desc: "Generación de documentación viva." },
+                { name: "Ollama + Llama 3", category: "Local", desc: "Privacidad total para datos sensibles." }
+            ]
+        };
+
+        // State Management
+        let appState = {
+            activePhase: 0,
+            activeFilter: 'all'
+        };
+
+        // DOM Elements
+        const phaseButtonsContainer = document.getElementById('phase-buttons');
+        const phaseDetailContainer = document.getElementById('phase-detail');
+        const techGrid = document.getElementById('tech-grid');
+        const filterButtons = document.querySelectorAll('.stack-filter');
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTimeline();
+            renderTechStack();
+            initCharts();
+
+            // Activate first phase by default
+            updatePhase(0);
+
+            // Filter Event Listeners
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Update UI classes
+                    filterButtons.forEach(b => {
+                        b.classList.remove('bg-brand-primary', 'text-white');
+                        b.classList.add('bg-white', 'text-gray-600');
+                    });
+                    e.target.classList.remove('bg-white', 'text-gray-600');
+                    e.target.classList.add('bg-brand-primary', 'text-white');
+
+                    // Filter Logic
+                    appState.activeFilter = e.target.dataset.filter;
+                    renderTechStack();
+                });
+            });
+        });
+
+        // --- Logic: Timeline ---
+        function renderTimeline() {
+            phaseButtonsContainer.innerHTML = reportData.phases.map((phase, index) => `
+                <button onclick="updatePhase(${index})" 
+                    class="phase-btn w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-center gap-4 group
+                    ${index === 0 ? 'border-brand-accent bg-brand-accent/5 shadow-md' : 'border-gray-200 hover:border-brand-accent/50 bg-white'}">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shrink-0 transition-colors
+                        ${index === 0 ? 'bg-brand-accent text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-brand-accent/20'}">
+                        ${phase.id}
+                    </div>
+                    <div>
+                        <span class="text-xs uppercase tracking-wider font-semibold text-gray-500 block">${phase.time}</span>
+                        <h3 class="font-bold text-gray-800 text-lg group-hover:text-brand-primary">${phase.title}</h3>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function updatePhase(index) {
+            appState.activePhase = index;
+            const phase = reportData.phases[index];
+
+            // Update Buttons Styles
+            const buttons = document.querySelectorAll('.phase-btn');
+            buttons.forEach((btn, idx) => {
+                const circle = btn.querySelector('div');
+                if (idx === index) {
+                    btn.classList.remove('border-gray-200', 'bg-white');
+                    btn.classList.add('border-brand-accent', 'bg-brand-accent/5', 'shadow-md');
+                    circle.classList.remove('bg-gray-100', 'text-gray-500');
+                    circle.classList.add('bg-brand-accent', 'text-white');
+                } else {
+                    btn.classList.add('border-gray-200', 'bg-white');
+                    btn.classList.remove('border-brand-accent', 'bg-brand-accent/5', 'shadow-md');
+                    circle.classList.add('bg-gray-100', 'text-gray-500');
+                    circle.classList.remove('bg-brand-accent', 'text-white');
+                }
+            });
+
+            // Update Detail Content with Animation
+            phaseDetailContainer.style.opacity = '0';
+            setTimeout(() => {
+                phaseDetailContainer.innerHTML = `
+                    <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
+                        <span class="text-5xl">${phase.icon}</span>
+                        <div>
+                            <span class="text-brand-accent font-bold uppercase tracking-wider text-sm">${phase.time}</span>
+                            <h2 class="text-3xl font-display font-bold text-brand-primary">${phase.title}</h2>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-gray-900">Acciones Clave:</h4>
+                        <ul class="space-y-4">
+                            ${phase.details.map(detail => `
+                                <li class="flex items-start gap-3 p-3 rounded-lg bg-gray-50 hover:bg-brand-bg transition-colors">
+                                    <span class="text-brand-accent mt-1">➤</span>
+                                    <p class="text-gray-700 leading-relaxed">${detail}</p>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-100 flex justify-between items-center">
+                        <span class="text-xs text-gray-400">Paso ${index + 1} de 4</span>
+                        ${index < 3 ? `<button onclick="updatePhase(${index + 1})" class="text-sm font-bold text-brand-primary hover:text-brand-accent">Siguiente Fase →</button>` : ''}
+                    </div>
+                `;
+                phaseDetailContainer.style.opacity = '1';
+            }, 200);
+        }
+
+        // --- Logic: Tech Stack ---
+        function renderTechStack() {
+            const filtered = appState.activeFilter === 'all'
+                ? reportData.techStack
+                : reportData.techStack.filter(item => item.category === appState.activeFilter || (appState.activeFilter === 'Modernization' && item.category === 'Modernization'));
+
+            techGrid.innerHTML = filtered.map(tool => `
+                <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md card-hover group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-lg text-brand-primary group-hover:text-brand-accent transition-colors">${tool.name}</h3>
+                        <span class="text-xs px-2 py-1 bg-gray-100 rounded-md text-gray-500">${tool.category}</span>
+                    </div>
+                    <p class="text-sm text-gray-600">${tool.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // --- Logic: Charts ---
+        function initCharts() {
+            // Chart 1: Impact (Comparison)
+            const ctxImpact = document.getElementById('impactChart').getContext('2d');
+            new Chart(ctxImpact, {
+                type: 'bar',
+                data: {
+                    labels: ['Velocidad Entrega', 'Deuda Técnica', 'Satisfacción Dev'],
+                    datasets: [
+                        {
+                            label: 'Tradicional',
+                            data: [100, 100, 70], // Baseline
+                            backgroundColor: '#CBD5E0',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Con SDLC Agéntico',
+                            data: [135, 40, 90], // +35%, -60%, Improved
+                            backgroundColor: ['#38B2AC', '#E76F51', '#2C3E50'],
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    let label = context.dataset.label || '';
+                                    if (label) label += ': ';
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + (context.dataIndex === 1 ? '% (Reducción)' : ' pts');
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, display: false },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Chart 2: Budget (Donut)
+            const ctxBudget = document.getElementById('budgetChart').getContext('2d');
+            new Chart(ctxBudget, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Licencias (Tools)', 'Consultoría/Setup', 'Formación', 'API Credits'],
+                    datasets: [{
+                        data: [23000, 20000, 15000, 10000], // Max values
+                        backgroundColor: ['#38B2AC', '#2C3E50', '#E76F51', '#F6AD55'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 12, usePointStyle: true } },
+                        title: { display: true, text: 'Inversión por Categoría' }
+                    }
+                }
+            });
+        }
+
+        // Smooth Scroll
+        window.scrollToSection = function (id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+    </script>
+</body>
+
+</html>
