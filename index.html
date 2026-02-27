@@ -380,6 +380,24 @@
         .no-export {
             display: none !important;
         }
+
+        /* Essential for PDF multi-page capture */
+        .pdf-export-mode {
+            height: auto !important;
+            overflow: visible !important;
+            aspect-ratio: auto !important;
+            background: #050505 !important;
+        }
+
+        .pdf-export-mode .slide {
+            display: flex !important;
+            position: relative !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            page-break-after: always !important;
+            background: #050505 !important;
+            margin-bottom: 0 !important;
+        }
     </style>
 </head>
 
@@ -1376,6 +1394,7 @@
         // PDF Export Logic
         async function exportPresentation() {
             const btn = document.getElementById('pdf-export-btn');
+            const container = document.querySelector('.slide-container');
             const originalBtnContent = btn.innerHTML;
 
             // Loading state
@@ -1390,20 +1409,9 @@
                 if (el) el.classList.add('no-export');
             });
 
-            // Target slides
-            const slides = document.querySelectorAll('.slide');
-            const originalStates = [];
+            // Apply export mode styles to force vertical flow for all slides
+            container.classList.add('pdf-export-mode');
 
-            // Prepare all slides for export (make them visible temporarily)
-            slides.forEach(slide => {
-                originalStates.push(slide.classList.contains('active'));
-                slide.style.display = 'flex';
-                slide.style.opacity = '1';
-                slide.style.position = 'relative';
-                slide.style.pageBreakAfter = 'always';
-            });
-
-            const element = document.querySelector('.slide-container');
             const opt = {
                 margin: 0,
                 filename: 'Estrategia-Adopcion-IA-2026.pdf',
@@ -1412,25 +1420,21 @@
                     scale: 2,
                     useCORS: true,
                     logging: false,
-                    backgroundColor: '#050505'
+                    backgroundColor: '#050505',
+                    scrollY: 0,
+                    scrollX: 0
                 },
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
             };
 
             try {
-                await html2pdf().set(opt).from(element).save();
+                await html2pdf().set(opt).from(container).save();
             } catch (err) {
                 console.error('PDF Export Error:', err);
                 alert('Error al generar el PDF. Por favor intenta de nuevo.');
             } finally {
                 // Restore original state
-                slides.forEach((slide, i) => {
-                    slide.style.display = '';
-                    slide.style.opacity = '';
-                    slide.style.position = '';
-                    slide.style.pageBreakAfter = '';
-                    slide.classList.toggle('active', originalStates[i]);
-                });
+                container.classList.remove('pdf-export-mode');
 
                 toHide.forEach(sel => {
                     const el = document.querySelector(sel);
