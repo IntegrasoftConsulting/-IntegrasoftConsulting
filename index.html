@@ -13,6 +13,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -305,6 +308,77 @@
         #chart-tooltip .tt-val {
             font-weight: 700;
             font-size: 12px;
+        }
+
+        /* PDF Export Button */
+        #pdf-export-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.8rem;
+            z-index: 200;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(13, 185, 242, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(13, 185, 242, 0.4);
+            color: #0db9f2;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 15px rgba(13, 185, 242, 0.2);
+        }
+
+        #pdf-export-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(13, 185, 242, 0.2);
+            box-shadow: 0 0 25px rgba(13, 185, 242, 0.4);
+            border-color: #0db9f2;
+        }
+
+        #pdf-export-btn svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s;
+        }
+
+        #pdf-export-btn:hover svg {
+            transform: rotate(-10deg);
+        }
+
+        /* Print/Export Styles */
+        @media print {
+
+            .nav-controls,
+            #profile-btn,
+            #pdf-export-btn {
+                display: none !important;
+            }
+
+            body {
+                background: black;
+            }
+
+            .slide-container {
+                width: 100% !important;
+                max-width: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+            }
+
+            .slide {
+                page-break-after: always;
+                display: flex !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                position: relative !important;
+            }
+        }
+
+        .no-export {
+            display: none !important;
         }
     </style>
 </head>
@@ -1284,12 +1358,92 @@
 
     </nav>
 
+    <!-- PDF Export Button -->
+    <button id="pdf-export-btn" onclick="exportPresentation()" title="Exportar a PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+    </button>
+
     <script>
-        // Scale: max value = 135, chart height = 260px
+        // ... (existing MAX_VAL and CHART_H)
         const MAX_VAL = 135;
         const CHART_H = 260;
 
-        function scaleH(val) { return Math.round((val / MAX_VAL) * CHART_H); }
+        // PDF Export Logic
+        async function exportPresentation() {
+            const btn = document.getElementById('pdf-export-btn');
+            const originalBtnContent = btn.innerHTML;
+
+            // Loading state
+            btn.innerHTML = '<span class="animate-spin text-xl">⏳</span>';
+            btn.style.opacity = '0.5';
+            btn.style.pointerEvents = 'none';
+
+            // Elements to hide during export
+            const toHide = ['.nav-controls', '#profile-btn', '#pdf-export-btn', '#chart-tooltip'];
+            toHide.forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) el.classList.add('no-export');
+            });
+
+            // Target slides
+            const slides = document.querySelectorAll('.slide');
+            const originalStates = [];
+
+            // Prepare all slides for export (make them visible temporarily)
+            slides.forEach(slide => {
+                originalStates.push(slide.classList.contains('active'));
+                slide.style.display = 'flex';
+                slide.style.opacity = '1';
+                slide.style.position = 'relative';
+                slide.style.pageBreakAfter = 'always';
+            });
+
+            const element = document.querySelector('.slide-container');
+            const opt = {
+                margin: 0,
+                filename: 'Estrategia-Adopcion-IA-2026.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#050505'
+                },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+            };
+
+            try {
+                await html2pdf().set(opt).from(element).save();
+            } catch (err) {
+                console.error('PDF Export Error:', err);
+                alert('Error al generar el PDF. Por favor intenta de nuevo.');
+            } finally {
+                // Restore original state
+                slides.forEach((slide, i) => {
+                    slide.style.display = '';
+                    slide.style.opacity = '';
+                    slide.style.position = '';
+                    slide.style.pageBreakAfter = '';
+                    slide.classList.toggle('active', originalStates[i]);
+                });
+
+                toHide.forEach(sel => {
+                    const el = document.querySelector(sel);
+                    if (el) el.classList.remove('no-export');
+                });
+
+                btn.innerHTML = originalBtnContent;
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'all';
+            }
+        }
+
+        // ---- Existing Logic ----
 
         const barData = [
             // [tradicional_value, agéntico_value]
