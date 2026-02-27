@@ -607,8 +607,8 @@
                 </svg>
 
                 <!-- Phase 1 -->
-                <div class="glass-card"
-                    style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #0db9f2;display:flex;flex-direction:column;gap:10px;">
+                <div class="glass-card roadmap-card" onclick="openRoadmapModal('diag')"
+                    style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #0db9f2;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform 0.3s ease;">
                     <div style="display:flex;align-items:center;gap:8px;">
                         <div
                             style="width:32px;height:32px;border-radius:50%;background:rgba(13,185,242,0.15);border:1.5px solid #0db9f2;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0db9f2;flex-shrink:0;">
@@ -619,8 +619,10 @@
                     </div>
                     <h3 style="font-size:0.85rem;font-weight:700;color:white;margin:0;line-height:1.3;">Diagnóstico y
                         Gobernanza</h3>
-                    <p style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin:0;">Auditoría de
-                        infraestructura, mapeo de procesos y marco ético organizacional.</p>
+                    <p style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin:0;">
+                        - Diagnóstico<br>
+                        - Mapeo de proceso de entrega
+                    </p>
                     <div style="margin-top:auto;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
                         <span style="font-size:8px;color:#0db9f2;letter-spacing:0.15em;">🔍 AUDITORÍA
                             &nbsp;&middot;&nbsp; 🏛️ ÉTICA</span>
@@ -628,8 +630,8 @@
                 </div>
 
                 <!-- Phase 2 -->
-                <div class="glass-card"
-                    style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #38bdf8;display:flex;flex-direction:column;gap:10px;">
+                <div class="glass-card roadmap-card" onclick="openRoadmapModal('upskill')"
+                    style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #38bdf8;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform 0.3s ease;">
                     <div style="display:flex;align-items:center;gap:8px;">
                         <div
                             style="width:32px;height:32px;border-radius:50%;background:rgba(56,189,248,0.15);border:1.5px solid #38bdf8;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#38bdf8;flex-shrink:0;">
@@ -1340,6 +1342,23 @@
         </div>
     </div>
 
+    <!-- Roadmap Details Modal -->
+    <div id="roadmap-modal-overlay" class="modal-overlay" onclick="handleRoadmapOverlayClick(event)">
+        <div class="glass-card modal-card max-w-[900px] w-[95%] p-12 relative overflow-y-auto max-h-[85vh]">
+            <button class="absolute top-6 right-8 text-white/40 hover:text-white transition-colors"
+                onclick="closeRoadmapModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div id="roadmap-modal-content">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
     <nav class="nav-controls">
         <button id="dot-1" class="dot-btn active" onclick="go(1)"></button>
         <button id="dot-2" class="dot-btn" onclick="go(2)"></button>
@@ -1450,7 +1469,131 @@
         }
 
         // Close with Escape key
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProfile(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeProfile();
+                closeRoadmapModal();
+            }
+        });
+
+        // ── Roadmap Modal Logic ──────────────────────────────
+        const roadmapContent = {
+            'diag': `
+                <div class="space-y-8">
+                    <div>
+                        <p class="text-neon-cyan uppercase tracking-[0.2em] text-[10px] font-bold mb-2">Fase 1 · Mes 1-2</p>
+                        <h2 class="text-4xl font-black text-white">Diagnóstico y Gobernanza</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="glass-card p-6 border-l-4 border-neon-cyan flex items-start gap-4">
+                            <span class="text-neon-cyan font-bold text-lg">01</span>
+                            <div>
+                                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-1">Assessment de madurez DevSecOps + IA</h4>
+                                <p class="text-white/50 text-xs">Evaluación integral de procesos actuales y preparación organizacional para la IA.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 border-l-4 border-neon-cyan flex items-start gap-4">
+                            <span class="text-neon-cyan font-bold text-lg">02</span>
+                            <div>
+                                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-1">Identificación deuda técnica</h4>
+                                <p class="text-white/50 text-xs">Mapeo de sistemas legacy y silos de código que requieren modernización prioritaria.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 border-l-4 border-neon-cyan flex items-start gap-4">
+                            <span class="text-neon-cyan font-bold text-lg">03</span>
+                            <div>
+                                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-1">Value Stream Mapping (VSM)</h4>
+                                <p class="text-white/50 text-xs">Mapeo detallado del proceso de entrega para identificar cuellos de botella optimizables.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'upskill': `
+                <div class="space-y-12">
+                    <div>
+                        <p class="text-neon-cyan uppercase tracking-[0.2em] text-[10px] font-bold mb-2">Fase 2 · Mes 2-4</p>
+                        <h2 class="text-4xl font-black text-white">Capacitación (Upskilling)</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-8">
+                        <!-- Section 1 -->
+                        <div class="space-y-4">
+                            <h3 class="text-neon-cyan font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Sección 1: Módulo 1</h3>
+                            <h4 class="text-white font-bold text-sm">Buenas Prácticas de Ingeniería en la Era IA</h4>
+                            <ul class="space-y-2 text-[11px] text-white/50">
+                                <li class="flex gap-2"><span class="text-neon-cyan">●</span> Fundamentos ing. de software (SOLID, Patrones)</li>
+                                <li class="flex gap-2"><span class="text-neon-cyan">●</span> Test Driven Development (TDD)</li>
+                                <li class="flex gap-2"><span class="text-neon-cyan">●</span> Behaviour Driven Develpment (BDD)</li>
+                                <li class="flex gap-2"><span class="text-neon-cyan">●</span> Domain Driven Design (DDD) / Clean Architectures</li>
+                                <li class="flex gap-2"><span class="text-neon-cyan">●</span> Enfoque "Manual Primero, luego IA"</li>
+                                <li class="flex gap-2"><span class="text-neon-cyan">●</span> Ingeniería de Prompts y Contexto</li>
+                                <li class="flex gap-2"><span class="text-neon-cyan">●</span> Reingeniería de la Revisión de Código</li>
+                            </ul>
+                        </div>
+
+                        <!-- Section 2 -->
+                        <div class="space-y-4">
+                            <h3 class="text-neon-purple font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Sección 2: Módulo 2</h3>
+                            <h4 class="text-white font-bold text-sm">Agilidad Impulsada por IA (AI-DLC)</h4>
+                            <div class="space-y-3">
+                                <div class="text-[11px] text-white/50">
+                                    <p class="text-white/80 font-bold mb-1">Fundamentos & Marcos</p>
+                                    <p>Manifiesto Ágil, MVP, Ciclos de feedback, Scrum/Kanban.</p>
+                                </div>
+                                <div class="text-[11px] text-white/50">
+                                    <p class="text-white/80 font-bold mb-1">Integración con IA</p>
+                                    <p><strong class="text-neon-purple">Discovery:</strong> LLMs para criterios de aceptación exhaustivos y casos de borde.</p>
+                                    <p><strong class="text-neon-purple">Simulación:</strong> IA como "Persona" para criticar funcionalidades pre-construcción.</p>
+                                </div>
+                                <div class="text-[11px] text-white/50">
+                                    <p class="text-white/80 font-bold mb-1">Mejora Continua</p>
+                                    <p>IA aplicada en retrospectivas y gestión del backlog.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3 -->
+                        <div class="space-y-4">
+                            <h3 class="text-green-400 font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Sección 3: Módulo 3</h3>
+                            <h4 class="text-white font-bold text-sm">DevSecOps</h4>
+                            <ul class="space-y-2 text-[11px] text-white/50">
+                                <li class="flex gap-2"><span class="text-green-400 font-bold">CI:</span> Shift-Left Security, Análisis estático, Dependencias.</li>
+                                <li class="flex gap-2"><span class="text-green-400 font-bold">CD:</span> IaC (Infraestructura como código), Estrategias de despliegue.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Section 4 -->
+                        <div class="space-y-4">
+                            <h3 class="text-yellow-400 font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Sección 4: Módulo 4</h3>
+                            <h4 class="text-white font-bold text-sm">Gobernanza y Riesgos</h4>
+                            <ul class="space-y-2 text-[11px] text-white/50">
+                                <li class="flex gap-2"><span class="text-yellow-400 font-black">!</span> Concientización sobre Limitaciones y Alucinaciones</li>
+                                <li class="flex gap-2"><span class="text-yellow-400 font-black">!</span> Privacidad de Datos y Guardrails</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        function openRoadmapModal(key) {
+            const content = roadmapContent[key];
+            if (!content) return;
+            document.getElementById('roadmap-modal-content').innerHTML = content;
+            document.getElementById('roadmap-modal-overlay').classList.add('open');
+            // Prevent main scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRoadmapModal() {
+            document.getElementById('roadmap-modal-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function handleRoadmapOverlayClick(e) {
+            if (e.target.id === 'roadmap-modal-overlay') closeRoadmapModal();
+        }
     </script>
 </body>
 
