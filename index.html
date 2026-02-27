@@ -729,8 +729,8 @@
                 </div>
 
                 <!-- Phase 3 -->
-                <div class="glass-card"
-                    style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #c084fc;display:flex;flex-direction:column;gap:10px;">
+                <div class="glass-card roadmap-card" onclick="openRoadmapModal('deploy')"
+                    style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #c084fc;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform 0.3s ease;">
                     <div style="display:flex;align-items:center;gap:8px;">
                         <div
                             style="width:32px;height:32px;border-radius:50%;background:rgba(192,132,252,0.15);border:1.5px solid #c084fc;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#c084fc;flex-shrink:0;">
@@ -739,10 +739,10 @@
                             style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:0.2em;text-transform:uppercase;">Mes
                             3-6</span>
                     </div>
-                    <h3 style="font-size:0.85rem;font-weight:700;color:white;margin:0;line-height:1.3;">Despliegue de
+                    <h3 style="font-size:0.85rem;font-weight:700;color:white;margin:0;line-height:1.3;">Despliegue &
                         Herramientas</h3>
-                    <p style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin:0;">Integración de
-                        agentes autónomos y pilotos en departamentos estratégicos.</p>
+                    <p style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin:0;">Integración de la
+                        IA en los flujos de trabajo de los equipos de desarrollo.</p>
                     <div style="margin-top:auto;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
                         <span style="font-size:8px;color:#c084fc;letter-spacing:0.15em;">🛠️ AGENTES
                             &nbsp;&middot;&nbsp; 🚀 PILOTOS</span>
@@ -1684,6 +1684,49 @@
                             <div class="flex items-center justify-between text-[11px] text-white/50">
                                 <span class="flex gap-2"><span class="text-yellow-400 font-black">!</span> Privacidad, Alucinaciones y Guardrails</span>
                                 <span class="px-1.5 py-0.5 rounded bg-yellow-400/10 border border-yellow-400/20 text-[9px] font-black text-yellow-400/80">3h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'deploy': `
+                <div class="space-y-12">
+                    <div>
+                        <p class="text-neon-purple uppercase tracking-[0.2em] text-[10px] font-bold mb-2">Fase 3 · Mes 3-6</p>
+                        <h2 class="text-4xl font-black text-white">Despliegue & Herramientas</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="glass-card p-6 border-l-4 border-neon-purple flex items-start gap-4">
+                            <div class="flex flex-col items-center gap-1.5 min-w-[32px]">
+                                <span class="text-neon-purple font-bold text-lg leading-none">01</span>
+                                <span class="px-1.5 py-0.5 rounded-full bg-neon-purple/10 border border-neon-purple/30 text-[8px] font-black text-neon-purple/90 tracking-tighter uppercase text-center">Integrasoft</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-1">Identificación de pilotos</h4>
+                                <p class="text-white/50 text-xs">Selección estratégica de procesos y equipos piloto para la fase de adopción temprana.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 border-l-4 border-neon-purple flex items-start gap-4">
+                            <div class="flex flex-col items-center gap-1.5 min-w-[32px]">
+                                <span class="text-neon-purple font-bold text-lg leading-none">02</span>
+                                <span class="px-1.5 py-0.5 rounded-full bg-neon-purple/10 border border-neon-purple/30 text-[8px] font-black text-neon-purple/90 tracking-tighter uppercase text-center">Integrasoft</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-1">Identificación de herramientas</h4>
+                                <p class="text-white/50 text-xs">Evaluación y selección del stack tecnológico óptimo según las necesidades del piloto.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 border-l-4 border-amber-500 flex items-start gap-4">
+                            <div class="flex flex-col items-center gap-1.5 min-w-[32px]">
+                                <span class="text-amber-500 font-bold text-lg leading-none">03</span>
+                                <span class="px-1.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[9px] font-black text-amber-500/90">6h</span>
+                            </div>
+                            <div>
+                                <h4 class="text-amber-500 font-bold text-sm uppercase tracking-wider mb-1">Acompañamiento a demanda</h4>
+                                <p class="text-white/50 text-xs">Sesiones de capacitación personalizada para la implementación de mejores prácticas. <span class="text-[9px] font-black uppercase text-amber-500/60 ml-1">(Opcional)</span></p>
                             </div>
                         </div>
                     </div>
