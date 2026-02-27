@@ -160,6 +160,45 @@
             animation: float 8s ease-in-out infinite;
         }
 
+        /* Floating Profile Button */
+        #profile-btn {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.8rem;
+            z-index: 200;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 2px solid rgba(13, 185, 242, 0.5);
+            overflow: hidden;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+            box-shadow: 0 0 16px rgba(13, 185, 242, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+            opacity: 0.85;
+        }
+
+        #profile-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 24px rgba(13, 185, 242, 0.6);
+            opacity: 1;
+        }
+
+        #profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 18%;
+        }
+
+        #profile-btn.on-profile {
+            box-shadow: 0 0 20px rgba(13, 185, 242, 0.8);
+            border-color: #0db9f2;
+            opacity: 1;
+            cursor: default;
+        }
+
         /* SVG Bar Tooltip */
         #chart-tooltip {
             position: fixed;
@@ -1178,6 +1217,11 @@
         </section>
     </div>
 
+    <!-- Floating Profile Button (visible on all slides, links to slide 7) -->
+    <button id="profile-btn" onclick="go(7)" title="Ver perfil del consultor">
+        <img src="photo.png" alt="Iván Sanchez">
+    </button>
+
     <!-- Tooltip: must be direct child of body so position:fixed works correctly -->
     <div id="chart-tooltip">
         <div class="tt-label" id="tt-category"></div>
@@ -1221,6 +1265,7 @@
         function go(n) {
             document.querySelectorAll('.slide').forEach((s, idx) => s.classList.toggle('active', (idx + 1) === n));
             document.querySelectorAll('.dot-btn').forEach((d, idx) => d.classList.toggle('active', (idx + 1) === n));
+            document.getElementById('profile-btn').classList.toggle('on-profile', n === 7);
 
             if (n === 2) {
                 setTimeout(() => {
