@@ -1391,6 +1391,8 @@
         const MAX_VAL = 135;
         const CHART_H = 260;
 
+        function scaleH(val) { return Math.round((val / MAX_VAL) * CHART_H); }
+
         // PDF Export Logic
         async function exportPresentation() {
             const btn = document.getElementById('pdf-export-btn');
