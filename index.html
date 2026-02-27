@@ -460,139 +460,8 @@
             </div>
         </section>
 
-        <!-- Slide 2 -->
-        <section id="slide-2" class="slide">
-            <div class="grid grid-cols-2 gap-16 items-center">
-                <div class="space-y-12">
-                    <h2 class="text-6xl font-black leading-tight">Impacto <br><span
-                            class="text-neon-cyan">Proyectado</span></h2>
-                    <div class="space-y-8">
-                        <div class="glass-card p-10 border-l-4 border-neon-cyan">
-                            <div class="flex justify-between mb-4"><span
-                                    class="uppercase tracking-widest text-xs font-bold text-white/50">Productividad</span><span
-                                    class="text-neon-cyan font-black text-4xl">+35%</span></div>
-                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                <div id="p1" class="h-full bg-neon-cyan shadow-[0_0_15px_#0db9f2]"
-                                    style="width: 0%; transition: width 1.2s ease-out;"></div>
-                            </div>
-                        </div>
-                        <div class="glass-card p-10 border-l-4 border-neon-purple">
-                            <div class="flex justify-between mb-4"><span
-                                    class="uppercase tracking-widest text-xs font-bold text-white/50">Deuda
-                                    Técnica</span><span class="text-neon-purple font-black text-4xl">-60%</span></div>
-                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                <div id="p2" class="h-full bg-neon-purple shadow-[0_0_15px_#a60df2]"
-                                    style="width: 0%; transition: width 1.2s ease-out;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card p-14 flex flex-col justify-center h-[550px] relative">
-                    <h3 class="text-xl font-bold mb-1">Comparativa de Eficiencia Operativa</h3>
-                    <p class="text-[10px] text-white/30 uppercase tracking-[0.3em] mb-6">SDLC Agéntico vs. Tradicional
-                    </p>
-
-                    <!-- Legend -->
-                    <div class="flex gap-6 mb-6">
-                        <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-sm" style="background:#6b7280;"></div>
-                            <span class="text-[10px] text-white/50 uppercase tracking-widest">Tradicional</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-sm" style="background:#0db9f2;"></div>
-                            <span class="text-[10px] text-white/50 uppercase tracking-widest">Con SDLC Agéntico</span>
-                        </div>
-                    </div>
-
-                    <div class="flex-grow flex items-end justify-center w-full">
-                        <svg width="400" height="260" viewBox="0 0 400 260" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" class="overflow-visible">
-
-                            <!-- Helper Lines (25%, 50%, 75%, 100% of max=135) -->
-                            <line x1="0" y1="260" x2="400" y2="260" stroke="white" stroke-opacity="0.1" />
-                            <line x1="0" y1="211" x2="400" y2="211" stroke="white" stroke-opacity="0.05"
-                                stroke-dasharray="4 4" />
-                            <line x1="0" y1="163" x2="400" y2="163" stroke="white" stroke-opacity="0.05"
-                                stroke-dasharray="4 4" />
-                            <line x1="0" y1="114" x2="400" y2="114" stroke="white" stroke-opacity="0.05"
-                                stroke-dasharray="4 4" />
-                            <line x1="0" y1="66" x2="400" y2="66" stroke="white" stroke-opacity="0.05"
-                                stroke-dasharray="4 4" />
-
-                            <!-- Y-axis labels -->
-                            <text x="-8" y="264" fill="white" fill-opacity="0.2" font-size="8"
-                                text-anchor="end">0</text>
-                            <text x="-8" y="216" fill="white" fill-opacity="0.2" font-size="8"
-                                text-anchor="end">34</text>
-                            <text x="-8" y="167" fill="white" fill-opacity="0.2" font-size="8"
-                                text-anchor="end">68</text>
-                            <text x="-8" y="118" fill="white" fill-opacity="0.2" font-size="8"
-                                text-anchor="end">101</text>
-                            <text x="-8" y="70" fill="white" fill-opacity="0.2" font-size="8"
-                                text-anchor="end">135</text>
-
-                            <!-- Group 1: Velocidad Entrega (baseline 100 → 135) -->
-                            <!-- Tradicional bar: value=100, max=135 → height = 260*(100/135) ≈ 193 -->
-                            <rect id="svgb-t1" class="svg-bar" x="18" y="260" width="34" height="0" rx="4"
-                                fill="#6b7280" fill-opacity="0.7" />
-                            <!-- Agéntico bar: value=135, max=135 → height = 260 -->
-                            <rect id="svgb-a1" class="svg-bar" x="58" y="260" width="34" height="0" rx="4"
-                                fill="#0db9f2" fill-opacity="0.9" />
-
-                            <!-- Group 2: Deuda Técnica (baseline 100 → 40) -->
-                            <!-- Tradicional bar: value=100 → height ≈ 193 -->
-                            <rect id="svgb-t2" class="svg-bar" x="152" y="260" width="34" height="0" rx="4"
-                                fill="#6b7280" fill-opacity="0.7" />
-                            <!-- Agéntico bar: value=40 → height = 260*(40/135) ≈ 77 -->
-                            <rect id="svgb-a2" class="svg-bar" x="192" y="260" width="34" height="0" rx="4"
-                                fill="#0db9f2" fill-opacity="0.9" />
-
-                            <!-- Group 3: Satisfacción Dev (baseline 70 → 90) -->
-                            <!-- Tradicional bar: value=70 → height = 260*(70/135) ≈ 135 -->
-                            <rect id="svgb-t3" class="svg-bar" x="286" y="260" width="34" height="0" rx="4"
-                                fill="#6b7280" fill-opacity="0.7" />
-                            <!-- Agéntico bar: value=90 → height = 260*(90/135) ≈ 173 -->
-                            <rect id="svgb-a3" class="svg-bar" x="326" y="260" width="34" height="0" rx="4"
-                                fill="#0db9f2" fill-opacity="0.9" />
-
-                            <!-- Value labels (appear on animate) -->
-                            <text id="lbl-t1" x="35" y="260" fill="white" fill-opacity="0" font-size="8"
-                                text-anchor="middle" font-weight="bold">100</text>
-                            <text id="lbl-a1" x="75" y="260" fill="#0db9f2" fill-opacity="0" font-size="8"
-                                text-anchor="middle" font-weight="bold">+35%</text>
-                            <text id="lbl-t2" x="169" y="260" fill="white" fill-opacity="0" font-size="8"
-                                text-anchor="middle" font-weight="bold">100</text>
-                            <text id="lbl-a2" x="209" y="260" fill="#0db9f2" fill-opacity="0" font-size="8"
-                                text-anchor="middle" font-weight="bold">-60%</text>
-                            <text id="lbl-t3" x="303" y="260" fill="white" fill-opacity="0" font-size="8"
-                                text-anchor="middle" font-weight="bold">70</text>
-                            <text id="lbl-a3" x="343" y="260" fill="#0db9f2" fill-opacity="0" font-size="8"
-                                text-anchor="middle" font-weight="bold">+29%</text>
-
-                            <!-- Bottom Category Labels -->
-                            <text x="55" y="285" fill="white" fill-opacity="0.4" font-size="8" text-anchor="middle"
-                                font-weight="bold">Velocidad</text>
-                            <text x="55" y="295" fill="white" fill-opacity="0.4" font-size="8" text-anchor="middle"
-                                font-weight="bold">Entrega</text>
-                            <text x="189" y="285" fill="white" fill-opacity="0.4" font-size="8" text-anchor="middle"
-                                font-weight="bold">Deuda</text>
-                            <text x="189" y="295" fill="white" fill-opacity="0.4" font-size="8" text-anchor="middle"
-                                font-weight="bold">Técnica</text>
-                            <text x="323" y="285" fill="white" fill-opacity="0.4" font-size="8" text-anchor="middle"
-                                font-weight="bold">Satisfacción</text>
-                            <text x="323" y="295" fill="white" fill-opacity="0.4" font-size="8" text-anchor="middle"
-                                font-weight="bold">Dev</text>
-                        </svg>
-                    </div>
-
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 3: ¿Por qué adoptar la IA ahora? El Imperativo Estratégico -->
-        <section id="slide-3" class="slide" style="padding: 2rem 4rem;">
+        <!-- Slide 2: ¿Por qué adoptar la IA ahora? El Imperativo Estratégico -->
+        <section id="slide-2" class="slide" style="padding: 2rem 4rem;">
             <div class="flex flex-col h-full">
                 <!-- Header -->
                 <div class="mb-8">
@@ -606,8 +475,8 @@
                 <div class="grid grid-cols-2 gap-6 relative flex-grow mb-4">
                     <!-- Central Message Overlay -->
                     <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                        <div
-                            class="glass-card px-8 py-5 border-2 border-neon-cyan shadow-[0_0_30px_rgba(13,185,242,0.2)] text-center max-w-[300px] pointer-events-auto">
+                        <div class="px-8 py-5 border-2 border-neon-cyan shadow-[0_0_30px_rgba(13,185,242,0.4)] text-center max-w-[300px] pointer-events-auto rounded-[24px]"
+                            style="background: #050505; opacity: 1;">
                             <p class="text-[11px] font-black uppercase tracking-wider text-white">De la ejecución manual
                                 a la <span class="text-neon-cyan">orquestación estratégica</span></p>
                         </div>
@@ -696,8 +565,8 @@
             </div>
         </section>
 
-        <!-- Slide 4: Roadmap de Implementación -->
-        <section id="slide-4" class="slide" style="padding: 3rem 4rem;">
+        <!-- Slide 3: Roadmap de Implementación -->
+        <section id="slide-3" class="slide" style="padding: 3rem 4rem;">
 
             <!-- Header row -->
             <div class="flex items-end justify-between mb-8">
@@ -854,8 +723,8 @@
             </div>
         </section>
 
-        <!-- Slide 5: Stack Tecnológico -->
-        <section id="slide-5" class="slide" style="padding: 3rem 4rem;">
+        <!-- Slide 4: Stack Tecnológico -->
+        <section id="slide-4" class="slide" style="padding: 3rem 4rem;">
 
             <!-- Header -->
             <div class="flex items-end justify-between mb-8">
@@ -1003,8 +872,8 @@
             </div>
         </section>
 
-        <!-- Slide 6: Plan de Formación por Roles -->
-        <section id="slide-6" class="slide" style="padding: 3rem 4rem;">
+        <!-- Slide 5: Plan de Formación por Roles -->
+        <section id="slide-5" class="slide" style="padding: 3rem 4rem;">
 
             <!-- Header -->
             <div class="flex items-end justify-between mb-8">
@@ -1177,8 +1046,8 @@
             </div>
         </section>
 
-        <!-- Slide 7: Budget & Governance -->
-        <section id="slide-7" class="slide" style="padding: 3rem 4rem;">
+        <!-- Slide 6: Budget & Governance -->
+        <section id="slide-6" class="slide" style="padding: 3rem 4rem;">
 
             <!-- Header -->
             <div class="flex items-end justify-between mb-8">
@@ -1478,7 +1347,6 @@
         <button id="dot-4" class="dot-btn" onclick="go(4)"></button>
         <button id="dot-5" class="dot-btn" onclick="go(5)"></button>
         <button id="dot-6" class="dot-btn" onclick="go(6)"></button>
-        <button id="dot-7" class="dot-btn" onclick="go(7)"></button>
     </nav>
 
     <!-- PDF Export Button -->
@@ -1554,136 +1422,15 @@
             }
         }
 
-        // ---- Existing Logic ----
-
-        const barData = [
-            // [tradicional_value, agéntico_value]
-            [100, 135],  // Velocidad Entrega
-            [100, 40],   // Deuda Técnica
-            [70, 90],   // Satisfacción Dev
-        ];
-
-        const barIds = [
-            ['svgb-t1', 'svgb-a1', 'lbl-t1', 'lbl-a1'],
-            ['svgb-t2', 'svgb-a2', 'lbl-t2', 'lbl-a2'],
-            ['svgb-t3', 'svgb-a3', 'lbl-t3', 'lbl-a3'],
-        ];
-
         let lastSlide = 1; // track current slide to restore after modal close
 
         function go(n) {
             lastSlide = n;
             document.querySelectorAll('.slide').forEach((s, idx) => s.classList.toggle('active', (idx + 1) === n));
             document.querySelectorAll('.dot-btn').forEach((d, idx) => d.classList.toggle('active', (idx + 1) === n));
-
-            if (n === 2) {
-                setTimeout(() => {
-                    document.getElementById('p1').style.width = '35%';
-                    document.getElementById('p2').style.width = '60%';
-
-                    barData.forEach(([tVal, aVal], i) => {
-                        const [tId, aId, tLbl, aLbl] = barIds[i];
-                        animSVG(tId, scaleH(tVal));
-                        animSVG(aId, scaleH(aVal));
-                        // Show value labels after bars animate
-                        setTimeout(() => {
-                            setLabelPos(tLbl, scaleH(tVal));
-                            setLabelPos(aLbl, scaleH(aVal));
-                        }, 1000);
-                    });
-                }, 200);
-            } else {
-                document.getElementById('p1').style.width = '0%';
-                document.getElementById('p2').style.width = '0%';
-                barIds.flat().forEach(id => {
-                    const el = document.getElementById(id);
-                    if (!el) return;
-                    if (el.tagName === 'rect') {
-                        el.setAttribute('height', '0');
-                        el.setAttribute('y', '260');
-                    } else {
-                        el.setAttribute('fill-opacity', '0');
-                    }
-                });
-            }
         }
 
-        function animSVG(id, h) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.setAttribute('height', h);
-                el.setAttribute('y', CHART_H - h);
-            }
-        }
 
-        function setLabelPos(id, h) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.setAttribute('y', CHART_H - h - 5);
-                el.setAttribute('fill-opacity', '1');
-            }
-        }
-
-        // ---- Tooltip Logic ----
-        const tooltipMeta = [
-            // { barId, category, series, value, unit }
-            { barId: 'svgb-t1', category: 'Velocidad Entrega', series: 'Tradicional', color: '#6b7280', value: 100, unit: ' pts' },
-            { barId: 'svgb-a1', category: 'Velocidad Entrega', series: 'Con SDLC Agéntico', color: '#0db9f2', value: 135, unit: ' pts (+35%)' },
-            { barId: 'svgb-t2', category: 'Deuda Técnica', series: 'Tradicional', color: '#6b7280', value: 100, unit: ' pts' },
-            { barId: 'svgb-a2', category: 'Deuda Técnica', series: 'Con SDLC Agéntico', color: '#0db9f2', value: 40, unit: ' pts (-60%)' },
-            { barId: 'svgb-t3', category: 'Satisfacción Dev', series: 'Tradicional', color: '#6b7280', value: 70, unit: ' pts' },
-            { barId: 'svgb-a3', category: 'Satisfacción Dev', series: 'Con SDLC Agéntico', color: '#0db9f2', value: 90, unit: ' pts (+29%)' },
-        ];
-
-        const tip = document.getElementById('chart-tooltip');
-        const tipCat = document.getElementById('tt-category');
-        const tipDot = document.getElementById('tt-dot');
-        const tipSeries = document.getElementById('tt-series');
-        const tipValue = document.getElementById('tt-value');
-        let tooltipsReady = false;
-
-        // Register tooltips once the DOM is ready — outside slide navigation
-        // so they work regardless of when the user navigates to slide 2.
-        document.addEventListener('DOMContentLoaded', initTooltips);
-
-        function initTooltips() {
-            if (tooltipsReady) return;
-            tooltipsReady = true;
-
-            tooltipMeta.forEach(({ barId, category, series, color, value, unit }) => {
-                const bar = document.getElementById(barId);
-                if (!bar) return;
-
-                bar.style.cursor = 'pointer';
-
-                bar.addEventListener('mousemove', (e) => {
-                    tipCat.textContent = category;
-                    tipDot.style.background = color;
-                    tipSeries.textContent = series + ': ';
-                    tipValue.textContent = value + unit;
-
-                    // Highlight bar
-                    bar.style.filter = 'brightness(1.35)';
-
-                    // Position tooltip near cursor
-                    const offset = 14;
-                    let tx = e.clientX + offset;
-                    let ty = e.clientY - 48;
-                    // Clamp to viewport
-                    if (tx + 200 > window.innerWidth) tx = e.clientX - 200 - offset;
-                    if (ty < 0) ty = e.clientY + offset;
-
-                    tip.style.left = tx + 'px';
-                    tip.style.top = ty + 'px';
-                    tip.style.opacity = '1';
-                });
-
-                bar.addEventListener('mouseleave', () => {
-                    tip.style.opacity = '0';
-                    bar.style.filter = '';
-                });
-            });
-        }
         // ── Profile Modal ──────────────────────────────────
         function openProfile() {
             document.getElementById('profile-modal-overlay').classList.add('open');
