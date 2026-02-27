@@ -1553,11 +1553,23 @@
             if (e.target.id === 'profile-modal-overlay') closeProfile();
         }
 
-        // Close with Escape key
+        // Keyboard Events: Navigation & Modals
         document.addEventListener('keydown', e => {
+            // 1. Handle Escape (Close any open modal)
             if (e.key === 'Escape') {
                 closeProfile();
                 closeRoadmapModal();
+                return;
+            }
+
+            // 2. Handle Slide Navigation (only if no modal is open)
+            const isModalOpen = !!document.querySelector('.modal-overlay.open');
+            if (!isModalOpen) {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    if (lastSlide < 6) go(lastSlide + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    if (lastSlide > 1) go(lastSlide - 1);
+                }
             }
         });
 
