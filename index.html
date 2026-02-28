@@ -481,14 +481,26 @@
             position: relative !important;
             opacity: 1 !important;
             visibility: visible !important;
-            page-break-after: always !important;
             background: #050505 !important;
-            margin-bottom: 0 !important;
+            margin: 0 !important;
+            padding: 2rem 4rem !important;
             /* Standard 16:9 High-Res Dimensions for Export */
             width: 1600px !important;
             height: 900px !important;
             min-height: 900px !important;
             max-width: none !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+        }
+
+        /* Prevent extra blank page at the end */
+        .pdf-export-mode .slide:last-of-type {
+            page-break-after: avoid !important;
+        }
+
+        /* Ensure all other slides break after */
+        .pdf-export-mode .slide:not(:last-of-type) {
+            page-break-after: always !important;
         }
 
         /* Disable complex filters during export to improve html2canvas reliability */
@@ -1226,15 +1238,23 @@
 
             // Apply export mode styles to force vertical flow for all slides
             container.classList.add('pdf-export-mode');
-            container.style.width = '1600px'; // Force container width for capture
+            container.style.width = '1600px';
             document.body.classList.add('pdf-no-filters');
+
+            // Find all visible slides to calculate total height
+            const slides = container.querySelectorAll('.slide');
+            const visibleSlides = Array.from(slides).filter(s => {
+                // Ignore commented out sections if any still exist in DOM (unlikely) 
+                // and ignore elements that are siblings but not actual slides
+                return s.offsetParent !== null || container.classList.contains('pdf-export-mode');
+            });
 
             const opt = {
                 margin: 0,
                 filename: 'Estrategia-Adopcion-IA-2026.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: {
-                    scale: 1, // Use fixed dimensions instead of scaling
+                    scale: 1,
                     useCORS: true,
                     logging: false,
                     backgroundColor: '#050505',
@@ -1243,14 +1263,15 @@
                     windowWidth: 1600,
                     windowHeight: 900,
                     width: 1600,
-                    height: 900 * 6 // Total height for all 6 slides
+                    height: 900 * visibleSlides.length
                 },
-                jsPDF: { unit: 'px', format: [1600, 900], orientation: 'landscape' }
+                jsPDF: { unit: 'px', format: [1600, 900], orientation: 'landscape' },
+                pagebreak: { mode: 'css' } // Use the CSS page-break rules we defined
             };
 
             try {
                 // Brief delay to ensure styles are applied and content is ready
-                await new Promise(resolve => setTimeout(resolve, 500));
+                await new Promise(resolve => setTimeout(resolve, 600));
                 await html2pdf().set(opt).from(container).save();
             } catch (err) {
                 console.error('PDF Export Error:', err);
