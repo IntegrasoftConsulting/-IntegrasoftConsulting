@@ -484,10 +484,11 @@
             page-break-after: always !important;
             background: #050505 !important;
             margin-bottom: 0 !important;
-            /* Force fixed height for landscape export to let h-full children work */
-            height: 750px !important;
-            min-height: 750px !important;
-            width: 100% !important;
+            /* Standard 16:9 High-Res Dimensions for Export */
+            width: 1600px !important;
+            height: 900px !important;
+            min-height: 900px !important;
+            max-width: none !important;
         }
 
         /* Disable complex filters during export to improve html2canvas reliability */
@@ -1225,6 +1226,7 @@
 
             // Apply export mode styles to force vertical flow for all slides
             container.classList.add('pdf-export-mode');
+            container.style.width = '1600px'; // Force container width for capture
             document.body.classList.add('pdf-no-filters');
 
             const opt = {
@@ -1232,14 +1234,18 @@
                 filename: 'Estrategia-Adopcion-IA-2026.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: {
-                    scale: 2,
+                    scale: 1, // Use fixed dimensions instead of scaling
                     useCORS: true,
                     logging: false,
                     backgroundColor: '#050505',
                     scrollY: 0,
-                    scrollX: 0
+                    scrollX: 0,
+                    windowWidth: 1600,
+                    windowHeight: 900,
+                    width: 1600,
+                    height: 900 * 6 // Total height for all 6 slides
                 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                jsPDF: { unit: 'px', format: [1600, 900], orientation: 'landscape' }
             };
 
             try {
@@ -1252,6 +1258,7 @@
             } finally {
                 // Restore original state
                 container.classList.remove('pdf-export-mode');
+                container.style.width = '';
                 document.body.classList.remove('pdf-no-filters');
 
                 toHide.forEach(sel => {
