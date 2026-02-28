@@ -22,8 +22,14 @@
                 extend: {
                     fontFamily: { sans: ['Space Grotesk', 'sans-serif'] },
                     colors: {
-                        neon: { cyan: '#0db9f2', purple: '#a60df2' },
-                        space: { black: '#050505' }
+                        neon: {
+                            cyan: 'var(--color-neon-cyan)',
+                            purple: 'var(--color-neon-purple)',
+                            green: 'var(--color-neon-green)',
+                            amber: 'var(--color-neon-amber)',
+                            pink: 'var(--color-neon-pink)'
+                        },
+                        space: { black: 'var(--color-space-black)' }
                     }
                 }
             }
@@ -31,8 +37,29 @@
     </script>
 
     <style>
+        :root {
+            /* Branding Colors */
+            --color-neon-cyan: #0db9f2;
+            --color-neon-purple: #a60df2;
+            --color-neon-green: #4ade80;
+            --color-neon-amber: #fbbf24;
+            --color-neon-pink: #f472b6;
+            --color-space-black: #050505;
+
+            /* Glassmorphism Standard */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-blur: blur(12px);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass-border-t: 2px solid rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+            /* Transitions */
+            --transition-premium: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-smooth: all 0.4s ease-in-out;
+        }
+
         body {
-            background-color: #050505;
+            background-color: var(--color-space-black);
             color: white;
             overflow-x: hidden;
             overflow-y: auto;
@@ -43,13 +70,16 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .ambient-bg {
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: radial-gradient(circle at 20% 30%, rgba(13, 185, 242, 0.1) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(166, 13, 242, 0.1) 0%, transparent 40%);
+            background:
+                radial-gradient(circle at 20% 30%, rgba(13, 185, 242, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(166, 13, 242, 0.12) 0%, transparent 45%);
             filter: blur(80px);
         }
 
@@ -57,7 +87,9 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            background-image: linear-gradient(rgba(13, 185, 242, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(13, 185, 242, 0.05) 1px, transparent 1px);
+            background-image:
+                linear-gradient(rgba(13, 185, 242, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(13, 185, 242, 0.06) 1px, transparent 1px);
             background-size: 50px 50px;
             perspective: 1000px;
             transform: rotateX(60deg) translateY(-20%);
@@ -65,11 +97,11 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
             border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: var(--glass-shadow);
         }
 
         .slide-container {
@@ -164,12 +196,13 @@
             background: rgba(255, 255, 255, 0.2);
             cursor: pointer;
             border: none;
-            transition: all 0.4s;
+            transition: var(--transition-premium);
         }
 
         .dot-btn.active {
-            background: #0db9f2;
+            background: var(--color-neon-cyan);
             width: 40px;
+            box-shadow: 0 0 15px rgba(13, 185, 242, 0.4);
         }
 
         /* Animated SVG Bar Chart */
@@ -222,12 +255,13 @@
 
         .modal-card {
             position: relative;
-            background: rgba(12, 12, 28, 0.92);
-            border: 1px solid rgba(13, 185, 242, 0.25);
-            border-radius: 20px;
+            background: rgba(12, 12, 28, 0.95);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(13, 185, 242, 0.3);
+            border-radius: 24px;
             box-shadow: 0 0 60px rgba(13, 185, 242, 0.15), 0 0 120px rgba(166, 13, 242, 0.1);
             transform: scale(0.93) translateY(20px);
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: var(--transition-premium);
         }
 
         .modal-overlay.open .modal-card {
@@ -236,11 +270,15 @@
 
         /* Responsive Helpers */
         .text-fluid-title {
-            font-size: clamp(2.5rem, 8vw, 6.5rem);
+            font-size: clamp(2.2rem, 10vw, 6rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
         }
 
         .text-fluid-h2 {
-            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
         }
 
         @media (max-width: 767px) {
@@ -301,14 +339,14 @@
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            border: 2px solid rgba(13, 185, 242, 0.5);
+            border: 2px solid rgba(13, 185, 242, 0.4);
             overflow: hidden;
             cursor: pointer;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: var(--glass-blur);
             padding: 0;
-            box-shadow: 0 0 16px rgba(13, 185, 242, 0.35);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 15px rgba(13, 185, 242, 0.2);
+            transition: var(--transition-premium);
             opacity: 0.85;
             display: flex;
             align-items: center;
@@ -316,10 +354,10 @@
         }
 
         .profile-btn:hover {
-            transform: scale(1.1) translateX(-5px);
-            box-shadow: 0 0 24px rgba(13, 185, 242, 0.6);
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 0 25px rgba(13, 185, 242, 0.5);
             opacity: 1;
-            border-color: #0db9f2;
+            border-color: var(--color-neon-cyan);
         }
 
         .profile-btn img {
@@ -356,16 +394,16 @@
         #chart-tooltip {
             position: fixed;
             pointer-events: none;
-            background: rgba(10, 10, 20, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            padding: 8px 12px;
+            background: rgba(10, 10, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 10px 14px;
             font-size: 11px;
             color: white;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: var(--glass-blur);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             opacity: 0;
-            transition: opacity 0.15s ease;
+            transition: opacity 0.2s ease, transform 0.2s ease;
             z-index: 9999;
             white-space: nowrap;
         }
@@ -405,24 +443,25 @@
             z-index: 200;
             width: 48px;
             height: 48px;
-            border-radius: 12px;
+            border-radius: 14px;
             background: rgba(13, 185, 242, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(13, 185, 242, 0.4);
-            color: #0db9f2;
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(13, 185, 242, 0.3);
+            color: var(--color-neon-cyan);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 0 15px rgba(13, 185, 242, 0.2);
+            transition: var(--transition-premium);
+            box-shadow: 0 0 15px rgba(13, 185, 242, 0.15);
         }
 
         #pdf-export-btn:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-5px) scale(1.08);
             background: rgba(13, 185, 242, 0.2);
-            box-shadow: 0 0 25px rgba(13, 185, 242, 0.4);
-            border-color: #0db9f2;
+            box-shadow: 0 0 30px rgba(13, 185, 242, 0.4);
+            border-color: var(--color-neon-cyan);
+            color: white;
         }
 
         #pdf-export-btn svg {
@@ -527,7 +566,7 @@
             <div class="flex flex-col items-center justify-center h-full w-full relative">
                 <!-- Decorative glow background -->
                 <div
-                    class="absolute inset-0 bg-gradient-to-r from-[#0db9f2] via-[#a60df2] to-[#4ade80] blur-[120px] opacity-20 transform scale-150 pointer-events-none">
+                    class="absolute inset-0 bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-green blur-[120px] opacity-20 transform scale-150 pointer-events-none">
                 </div>
 
                 <div
@@ -535,13 +574,14 @@
                     <!-- Internal Header -->
                     <div class="flex items-center gap-4 opacity-70">
                         <div
-                            style="width:40px;height:40px;border-radius:50%;border:1.5px solid #0db9f2;display:flex;align-items:center;justify-content:center;">
-                            <span style="font-size:12px;font-weight:800;color:#0db9f2;letter-spacing:0.05em;">IA</span>
+                            style="width:40px;height:40px;border-radius:50%;border:1.5px solid var(--color-neon-cyan);display:flex;align-items:center;justify-content:center;">
+                            <span
+                                style="font-size:12px;font-weight:800;color:var(--color-neon-cyan);letter-spacing:0.05em;">IA</span>
                         </div>
                         <div style="width:1px;height:24px;background:rgba(255,255,255,0.2);"></div>
                         <div class="text-left">
                             <div
-                                style="font-size:8px;color:#0db9f2;letter-spacing:0.25em;text-transform:uppercase;font-weight:700;">
+                                style="font-size:8px;color:var(--color-neon-cyan);letter-spacing:0.25em;text-transform:uppercase;font-weight:700;">
                                 Keynote Series 2026</div>
                             <div
                                 style="font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.2em;text-transform:uppercase;">
@@ -553,7 +593,7 @@
                         <h1 class="text-fluid-title font-black leading-none mb-6 tracking-tighter">
                             Estrategia de<br>
                             <span
-                                style="background: linear-gradient(90deg, #0db9f2 0%, #a60df2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Adopción
+                                style="background: linear-gradient(90deg, var(--color-neon-cyan) 0%, var(--color-neon-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Adopción
                                 de IA</span>
                         </h1>
                         <p class="text-xl md:text-2xl text-white/50 font-normal tracking-wide mb-8">
@@ -562,7 +602,7 @@
                     </div>
 
                     <div
-                        class="glass-card flex flex-col gap-1.5 p-6 border-l-4 border-[#0db9f2] w-full max-w-md bg-white/5 mx-auto">
+                        class="glass-card flex flex-col gap-1.5 p-6 border-l-4 border-neon-cyan w-full max-w-md bg-white/5 mx-auto">
                         <span
                             class="text-[9px] text-white/35 tracking-[0.25em] uppercase font-semibold text-left">Preparado
                             para</span>
@@ -625,7 +665,7 @@
                         </div>
 
                         <!-- Quadrant 2: Quality -->
-                        <div class="glass-card p-6 border-t-2 border-green-400 flex flex-col gap-3 bg-white/5">
+                        <div class="glass-card p-6 border-t-2 border-neon-green flex flex-col gap-3 bg-white/5">
                             <div class="flex items-center gap-3">
                                 <span class="text-2xl">🛡️</span>
                                 <h3 class="text-xs font-bold uppercase tracking-widest text-white/90">Calidad y Riesgos
@@ -633,12 +673,12 @@
                             </div>
                             <ul class="space-y-2">
                                 <li class="flex gap-2 text-[10px] md:text-[11px] text-white/50 leading-relaxed">
-                                    <span class="text-green-400 font-bold">▶</span>
+                                    <span class="text-neon-green font-bold">▶</span>
                                     <span>Reducción de deuda técnica en <strong class="text-white">50%-60%</strong>
                                         (Modernización Legacy).</span>
                                 </li>
                                 <li class="flex gap-2 text-[10px] md:text-[11px] text-white/50 leading-relaxed">
-                                    <span class="text-green-400 font-bold">▶</span>
+                                    <span class="text-neon-green font-bold">▶</span>
                                     <span>Seguridad: hasta un <strong class="text-white">54%</strong> menos
                                         vulnerabilidades reportadas.</span>
                                 </li>
@@ -666,7 +706,7 @@
                         </div>
 
                         <!-- Quadrant 4: Market -->
-                        <div class="glass-card p-6 border-t-2 border-yellow-400 flex flex-col gap-3 bg-white/5">
+                        <div class="glass-card p-6 border-t-2 border-neon-amber flex flex-col gap-3 bg-white/5">
                             <div class="flex items-center gap-3">
                                 <span class="text-2xl">📈</span>
                                 <h3 class="text-xs font-bold uppercase tracking-widest text-white/90">Adopción del
@@ -674,12 +714,12 @@
                             </div>
                             <ul class="space-y-2">
                                 <li class="flex gap-2 text-[10px] md:text-[11px] text-white/50 leading-relaxed">
-                                    <span class="text-yellow-400 font-bold">▶</span>
+                                    <span class="text-neon-amber font-bold">▶</span>
                                     <span>Proyección 2028: <strong class="text-white">90%</strong> de los ingenieros
                                         usarán asistentes IA.</span>
                                 </li>
                                 <li class="flex gap-2 text-[10px] md:text-[11px] text-white/50 leading-relaxed">
-                                    <span class="text-yellow-400 font-bold">▶</span>
+                                    <span class="text-neon-amber font-bold">▶</span>
                                     <span>Inacción = pérdida de competitividad frente a flujos aumentados.</span>
                                 </li>
                             </ul>
@@ -694,7 +734,7 @@
             <div class="flex flex-col items-center justify-center h-full w-full relative">
                 <!-- Decorative glow background -->
                 <div
-                    class="absolute inset-0 bg-gradient-to-r from-[#0db9f2] via-[#a60df2] to-[#4ade80] blur-[100px] opacity-10 transform scale-125 pointer-events-none">
+                    class="absolute inset-0 bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-green blur-[100px] opacity-10 transform scale-125 pointer-events-none">
                 </div>
 
                 <div
@@ -705,12 +745,13 @@
                             <p class="text-[9px] text-[#a60df2] tracking-[0.3em] uppercase mb-2">Visión Estratégica · 12
                                 Meses</p>
                             <h2 class="text-3xl md:text-5xl font-black leading-tight">Roadmap de <span
-                                    style="background:linear-gradient(90deg,#0db9f2,#a60df2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Implementación</span>
+                                    style="background:linear-gradient(90deg,var(--color-neon-cyan),var(--color-neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Implementación</span>
                             </h2>
                         </div>
                         <div
-                            class="inline-flex items-center gap-2 bg-[#0db9f214] border border-[#0db9f233] rounded-full px-4 py-1.5 w-fit h-fit">
-                            <div class="w-2 h-2 rounded-full bg-[#0db9f2] shadow-[0_0_8px_#0db9f2]"></div>
+                            class="inline-flex items-center gap-2 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full px-4 py-1.5 w-fit h-fit">
+                            <div class="w-2 h-2 rounded-full bg-neon-cyan shadow-[0_0_8px_var(--color-neon-cyan)]">
+                            </div>
                             <span class="text-[10px] text-white/50 tracking-widest uppercase font-bold">En
                                 Ejecución</span>
                         </div>
@@ -754,10 +795,10 @@
 
                         <!-- Phase 2 -->
                         <div class="glass-card roadmap-card bg-white/5" onclick="openRoadmapModal('upskill')"
-                            style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #38bdf8;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform 0.3s ease;">
+                            style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid var(--color-neon-cyan);display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:var(--transition-premium);">
                             <div style="display:flex;align-items:center;gap:8px;">
                                 <div
-                                    style="width:32px;height:32px;border-radius:50%;background:rgba(56,189,248,0.15);border:1.5px solid #38bdf8;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#38bdf8;flex-shrink:0;">
+                                    style="width:32px;height:32px;border-radius:50%;background:rgba(13,185,242,0.15);border:1.5px solid var(--color-neon-cyan);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--color-neon-cyan);flex-shrink:0;">
                                     2</div>
                                 <span
                                     style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:0.2em;text-transform:uppercase;">Mes
@@ -768,17 +809,18 @@
                             <p style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin:0;">Programas
                                 intensivos de alfabetización en IA y formación técnica para líderes.</p>
                             <div style="margin-top:auto;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
-                                <span style="font-size:8px;color:#38bdf8;letter-spacing:0.15em;">🎓 TRAINING
+                                <span style="font-size:8px;color:var(--color-neon-cyan);letter-spacing:0.15em;">🎓
+                                    TRAINING
                                     &nbsp;&middot;&nbsp; 🏅 CERTS</span>
                             </div>
                         </div>
 
                         <!-- Phase 3 -->
                         <div class="glass-card roadmap-card bg-white/5" onclick="openRoadmapModal('deploy')"
-                            style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid #c084fc;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform 0.3s ease;">
+                            style="position:relative;z-index:1;padding:1.4rem;border-top:2px solid var(--color-neon-purple);display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:var(--transition-premium);">
                             <div style="display:flex;align-items:center;gap:8px;">
                                 <div
-                                    style="width:32px;height:32px;border-radius:50%;background:rgba(192,132,252,0.15);border:1.5px solid #c084fc;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#c084fc;flex-shrink:0;">
+                                    style="width:32px;height:32px;border-radius:50%;background:rgba(166,13,242,0.15);border:1.5px solid var(--color-neon-purple);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--color-neon-purple);flex-shrink:0;">
                                     3</div>
                                 <span
                                     style="font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:0.2em;text-transform:uppercase;">Mes
@@ -789,7 +831,8 @@
                             <p style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin:0;">
                                 Integración de la IA en los flujos de trabajo de los equipos de desarrollo.</p>
                             <div style="margin-top:auto;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
-                                <span style="font-size:8px;color:#c084fc;letter-spacing:0.15em;">🛠️ AGENTES
+                                <span style="font-size:8px;color:var(--color-neon-purple);letter-spacing:0.15em;">🛠️
+                                    AGENTES
                                     &nbsp;&middot;&nbsp; 🚀 PILOTOS</span>
                             </div>
                         </div>
@@ -870,33 +913,33 @@
                     <!-- 4 Category Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <!-- Module 1: Engineering -->
-                        <div class="glass-card bg-white/5 p-6 border-t-2 border-[#0db9f2] flex flex-col gap-4">
+                        <div class="glass-card bg-white/5 p-6 border-t-2 border-neon-cyan flex flex-col gap-4">
                             <div class="flex items-center gap-3">
-                                <span class="text-xl">💻</span>
+                                <span class="text-xl">🤖</span>
                                 <div>
-                                    <div class="text-[8px] text-[#0db9f2] tracking-widest uppercase">Módulo 1</div>
-                                    <div class="text-xs font-black text-white">Ingeniería Agentic</div>
+                                    <div class="text-[8px] text-neon-cyan tracking-widest uppercase">Módulo 1</div>
+                                    <div class="text-xs font-black text-white">Ingeniería Modern Agentic</div>
                                 </div>
                             </div>
                             <p class="text-[10px] text-white/40 leading-relaxed">Clean Architecture, TDD y Pair
                                 Programming con agentes de IA de última generación.</p>
                             <div class="flex flex-wrap gap-2 mt-auto">
                                 <span
-                                    class="text-[9px] bg-[#0db9f2]/10 border border-[#0db9f2]/20 text-[#0db9f2] rounded-md px-2 py-1">Antigravity</span>
+                                    class="text-[9px] bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan rounded-md px-2 py-1">Antigravity</span>
                                 <span
-                                    class="text-[9px] bg-[#0db9f2]/10 border border-[#0db9f2]/20 text-[#0db9f2] rounded-md px-2 py-1">VS
+                                    class="text-[9px] bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan rounded-md px-2 py-1">VS
                                     Code</span>
                                 <span
-                                    class="text-[9px] bg-[#0db9f2]/10 border border-[#0db9f2]/20 text-[#0db9f2] rounded-md px-2 py-1">Cursor</span>
+                                    class="text-[9px] bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan rounded-md px-2 py-1">Cursor</span>
                             </div>
                         </div>
 
                         <!-- Module 2: Agility -->
-                        <div class="glass-card bg-white/5 p-6 border-t-2 border-[#4ade80] flex flex-col gap-4">
+                        <div class="glass-card bg-white/5 p-6 border-t-2 border-neon-green flex flex-col gap-4">
                             <div class="flex items-center gap-3">
                                 <span class="text-xl">⚡</span>
                                 <div>
-                                    <div class="text-[8px] text-[#4ade80] tracking-widest uppercase">Módulo 2</div>
+                                    <div class="text-[8px] text-neon-green tracking-widest uppercase">Módulo 2</div>
                                     <div class="text-xs font-black text-white">Agilidad IA</div>
                                 </div>
                             </div>
@@ -904,45 +947,45 @@
                                 Discovery y gestión ágil potenciada por LLMs.</p>
                             <div class="flex flex-wrap gap-2 mt-auto">
                                 <span
-                                    class="text-[9px] bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80] rounded-md px-2 py-1">Jira
+                                    class="text-[9px] bg-neon-green/10 border border-neon-green/20 text-neon-green rounded-md px-2 py-1">Jira
                                     AI</span>
                                 <span
-                                    class="text-[9px] bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80] rounded-md px-2 py-1">AppFlowy</span>
+                                    class="text-[9px] bg-neon-green/10 border border-neon-green/20 text-neon-green rounded-md px-2 py-1">AppFlowy</span>
                                 <span
-                                    class="text-[9px] bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80] rounded-md px-2 py-1">Linear</span>
+                                    class="text-[9px] bg-neon-green/10 border border-neon-green/20 text-neon-green rounded-md px-2 py-1">Linear</span>
                             </div>
                         </div>
 
                         <!-- Module 3: DevSecOps -->
-                        <div class="glass-card bg-white/5 p-6 border-t-2 border-[#f472b6] flex flex-col gap-4">
+                        <div class="glass-card bg-white/5 p-6 border-t-2 border-neon-purple flex flex-col gap-4">
                             <div class="flex items-center gap-3">
-                                <span class="text-xl">🛡️</span>
+                                <span class="text-xl">🛠️</span>
                                 <div>
-                                    <div class="text-[8px] text-[#f472b6] tracking-widest uppercase">Módulo 3</div>
-                                    <div class="text-xs font-black text-white">DevSecOps IA</div>
+                                    <div class="text-[8px] text-neon-purple tracking-widest uppercase">Módulo 3</div>
+                                    <div class="text-xs font-black text-white">DevOps & LLMOps</div>
                                 </div>
                             </div>
                             <p class="text-[10px] text-white/40 leading-relaxed">Pipeline CI/CD inteligente, seguridad
                                 automatizada y despliegue continuo con IA.</p>
                             <div class="flex flex-wrap gap-2 mt-auto">
                                 <span
-                                    class="text-[9px] bg-[#f472b6]/10 border border-[#f472b6]/20 text-[#f472b6] rounded-md px-2 py-1">GitHub
+                                    class="text-[9px] bg-neon-purple/10 border border-neon-purple/20 text-neon-purple rounded-md px-2 py-1">GitHub
                                     Actions</span>
                                 <span
-                                    class="text-[9px] bg-[#f472b6]/10 border border-[#f472b6]/20 text-[#f472b6] rounded-md px-2 py-1">Jenkins</span>
+                                    class="text-[9px] bg-neon-purple/10 border border-neon-purple/20 text-neon-purple rounded-md px-2 py-1">Jenkins</span>
                                 <span
-                                    class="text-[9px] bg-[#f472b6]/10 border border-[#f472b6]/20 text-[#f472b6] rounded-md px-2 py-1">Amazon
+                                    class="text-[9px] bg-neon-purple/10 border border-neon-purple/20 text-neon-purple rounded-md px-2 py-1">Amazon
                                     Q</span>
                             </div>
                         </div>
 
                         <!-- Module 4: Governance -->
-                        <div class="glass-card bg-white/5 p-6 border-t-2 border-[#fbbf24] flex flex-col gap-4">
+                        <div class="glass-card bg-white/5 p-6 border-t-2 border-neon-amber flex flex-col gap-4">
                             <div class="flex items-center gap-3">
-                                <span class="text-xl">⚖️</span>
+                                <span class="text-xl">👁️</span>
                                 <div>
-                                    <div class="text-[8px] text-[#fbbf24] tracking-widest uppercase">Módulo 4</div>
-                                    <div class="text-xs font-black text-white">Gobernanza & Ética</div>
+                                    <div class="text-[8px] text-neon-amber tracking-widest uppercase">Módulo 4</div>
+                                    <div class="text-xs font-black text-white">Observabilidad & QA</div>
                                 </div>
                             </div>
                             <p class="text-[10px] text-white/40 leading-relaxed">Guardrails, ética en IA y ejecución de
@@ -1006,8 +1049,8 @@
                     <div class="text-center">
                         <p class="text-[9px] text-[#fbbf24] tracking-[0.3em] uppercase mb-2">Inversión · Consultoría
                             Estratégica</p>
-                        <h2 class="text-3xl md:text-5xl font-black text-white tracking-tight">Propuesta <span
-                                style="background:linear-gradient(90deg,#fbbf24,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Económica</span>
+                        <h2 class="text-3xl md:text-5xl font-black leading-tight">Propuesta <span
+                                style="background:linear-gradient(90deg,var(--color-neon-amber),var(--color-neon-green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Económica</span>
                         </h2>
                     </div>
 
@@ -1015,11 +1058,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                         <!-- Plan 1: Arma tu plan -->
                         <div
-                            class="glass-card flex flex-col items-center text-center p-8 border-t-4 border-[#0db9f2] bg-white/5">
+                            class="glass-card flex flex-col items-center text-center p-8 border-t-4 border-neon-cyan bg-white/5">
                             <div
-                                class="w-16 h-16 rounded-2xl bg-[#0db9f2]/10 border border-[#0db9f2]/20 flex items-center justify-center text-3xl mb-4">
+                                class="w-16 h-16 rounded-2xl bg-neon-cyan/10 border border-neon-cyan/20 flex items-center justify-center text-3xl mb-4">
                                 🛠️</div>
-                            <div class="text-[10px] text-[#0db9f2] font-black tracking-widest uppercase mb-1">Plan 1
+                            <div class="text-[10px] text-neon-cyan font-black tracking-widest uppercase mb-1">Plan 1
                             </div>
                             <h3 class="text-xl font-black text-white mb-2">Arma tu plan</h3>
                             <div class="text-3xl font-black text-white mb-2">$180.000 <span
@@ -1036,14 +1079,14 @@
 
                         <!-- Plan 2: Solo formación -->
                         <div
-                            class="glass-card flex flex-col items-center text-center p-8 border-t-4 border-[#4ade80] relative overflow-hidden bg-white/5 shadow-2xl scale-105 z-10">
+                            class="glass-card flex flex-col items-center text-center p-8 border-t-4 border-neon-green relative overflow-hidden bg-white/5 shadow-2xl scale-105 z-10">
                             <div
-                                class="absolute top-0 right-0 bg-[#4ade80] text-black text-[8px] font-black px-4 py-1 rotate-45 translate-x-4 translate-y-2 uppercase tracking-tighter">
+                                class="absolute top-0 right-0 bg-neon-green text-black text-[8px] font-black px-4 py-1 rotate-45 translate-x-4 translate-y-2 uppercase tracking-tighter">
                                 Popular</div>
                             <div
-                                class="w-16 h-16 rounded-2xl bg-[#4ade80]/10 border border-[#4ade80]/20 flex items-center justify-center text-3xl mb-4">
+                                class="w-16 h-16 rounded-2xl bg-neon-green/10 border border-neon-green/20 flex items-center justify-center text-3xl mb-4">
                                 🎓</div>
-                            <div class="text-[10px] text-[#4ade80] font-black tracking-widest uppercase mb-1">Plan 2
+                            <div class="text-[10px] text-neon-green font-black tracking-widest uppercase mb-1">Plan 2
                             </div>
                             <h3 class="text-xl font-black text-white mb-2">Solo formación</h3>
                             <div class="text-3xl font-black text-white mb-2">$165.000 <span
@@ -1060,11 +1103,11 @@
 
                         <!-- Plan 3: Plan completo -->
                         <div
-                            class="glass-card flex flex-col items-center text-center p-8 border-t-4 border-[#a60df2] bg-white/5">
+                            class="glass-card flex flex-col items-center text-center p-8 border-t-4 border-neon-purple bg-white/5">
                             <div
-                                class="w-16 h-16 rounded-2xl bg-[#a60df2]/10 border border-[#a60df2]/20 flex items-center justify-center text-3xl mb-4">
+                                class="w-16 h-16 rounded-2xl bg-neon-purple/10 border border-neon-purple/20 flex items-center justify-center text-3xl mb-4">
                                 🚀</div>
-                            <div class="text-[10px] text-[#a60df2] font-black tracking-widest uppercase mb-1">Plan 3
+                            <div class="text-[10px] text-neon-purple font-black tracking-widest uppercase mb-1">Plan 3
                             </div>
                             <h3 class="text-xl font-black text-white mb-2">Plan completo</h3>
                             <div class="text-3xl font-black text-white mb-2">$160.000 <span
@@ -1081,7 +1124,7 @@
 
                     <!-- Footnote -->
                     <div
-                        class="glass-card p-4 flex items-center justify-center gap-4 border-l-4 border-[#fbbf24] bg-white/5 w-full">
+                        class="glass-card p-4 flex items-center justify-center gap-4 border-l-4 border-neon-amber bg-white/5 w-full">
                         <span class="text-xl">🇨🇴</span>
                         <p class="text-[10px] text-white/40 uppercase tracking-widest">Precios expresados en Pesos
                             Colombianos (COP). Esta cotización tiene un periodo de validez de 15 días.</p>
@@ -1095,7 +1138,7 @@
             <div class="flex flex-col items-center justify-center text-center h-full w-full relative">
                 <!-- Decorative glow background -->
                 <div
-                    class="absolute inset-0 bg-gradient-to-r from-[#0db9f2] via-[#a60df2] to-[#4ade80] blur-[120px] opacity-20 transform scale-150">
+                    class="absolute inset-0 bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-green blur-[120px] opacity-20 transform scale-150">
                 </div>
 
                 <div
@@ -1107,7 +1150,7 @@
 
                     <h2 class="text-6xl md:text-8xl font-black tracking-tighter text-white">
                         ¡Muchas <span
-                            style="background:linear-gradient(90deg,#0db9f2,#a60df2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Gracias!</span>
+                            style="background:linear-gradient(90deg,var(--color-neon-cyan),var(--color-neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Gracias!</span>
                     </h2>
 
                     <div class="flex flex-col items-center gap-2">
@@ -1312,9 +1355,9 @@
                 objectPosition: '50% 18%',
                 scale: '1.1',
                 motto: 'Real Solutions &middot; Real DevOps<br>Real Community',
-                primaryColor: '#0db9f2',
-                secondaryColor: '#a60df2',
-                title: 'Consultor en <span style="background:linear-gradient(90deg,#0db9f2,#a60df2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Transformación Digital 4.0</span>',
+                primaryColor: 'var(--color-neon-cyan)',
+                secondaryColor: 'var(--color-neon-purple)',
+                title: 'Consultor en <span style="background:linear-gradient(90deg,var(--color-neon-cyan),var(--color-neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Transformación Digital 4.0</span>',
                 subtitle: 'Presentación Estratégica &middot; Liderazgo Digital Innovador',
                 academic: [
                     'Master en Innovación Digital',
@@ -1322,7 +1365,7 @@
                     'Ingeniero de Sistemas'
                 ],
                 experience: [
-                    '<strong style="color:#0db9f2;">+16 años</strong> en proyectos de software',
+                    '<strong style="color:var(--color-neon-cyan);">+16 años</strong> en proyectos de software',
                     'Arquitectura de software empresarial',
                     'Strategic Tech Leadership'
                 ],
@@ -1337,16 +1380,16 @@
                 objectPosition: '50% 15%',
                 scale: '1.35',
                 motto: 'Liderazgo Ágil &middot; Excelencia en Entrega<br>Transformación de Equipos',
-                primaryColor: '#a60df2',
-                secondaryColor: '#f472b6',
-                title: '<span style="background:linear-gradient(90deg,#a60df2,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Agility & Business Transformation</span>',
+                primaryColor: 'var(--color-neon-purple)',
+                secondaryColor: 'var(--color-neon-pink)',
+                title: '<span style="background:linear-gradient(90deg,var(--color-neon-purple),var(--color-neon-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Agility & Business Transformation</span>',
                 subtitle: 'BGR &middot; Estrategia Ágil y Gestión del Cambio',
                 academic: [
                     'Master en negocios digitales',
                     'Ingeniera de Sistemas'
                 ],
                 experience: [
-                    '<strong style="color:#a60df2;">+16 años</strong> en proyectos de software',
+                    '<strong style="color:var(--color-neon-purple);">+16 años</strong> en proyectos de software',
                     'Líder y Coach de agilidad',
                     'Líder de equipos de pruebas'
                 ],
@@ -1394,10 +1437,10 @@
                             <h2 style="font-size:2.2rem;font-weight:900;line-height:1.1;margin:0;">${data.title}</h2>
                         </div>
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-                            <div class="glass-card" style="padding:1.1rem;border-top:2px solid #4ade80;">
-                                <div style="font-size:7px;color:#4ade80;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;">🎓 Credenciales Académicas</div>
-                                <div style="display:flex;flex-direction:column;gap:7px;">
-                                    ${data.academic.map(item => `<div style="display:flex;gap:7px;align-items:flex-start;"><span style="color:#4ade80;font-size:11px;flex-shrink:0;">✔</span><span style="font-size:0.68rem;color:rgba(255,255,255,0.7);line-height:1.4;">${item}</span></div>`).join('')}
+                            <div class="glass-card" style="padding:1.1rem;border-top:2px solid var(--color-neon-green);">
+                                <div style="font-size:7px;color:var(--color-neon-green);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;">🎓 Credenciales Académicas</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    ${data.academic.map(item => `<div style="display:flex;gap:7px;align-items:flex-start;"><span style="color:var(--color-neon-green);font-size:11px;flex-shrink:0;">✔</span><span style="font-size:0.68rem;color:rgba(255,255,255,0.7);line-height:1.4;">${item}</span></div>`).join('')}
                                 </div>
                             </div>
                             <div class="glass-card" style="padding:1.1rem;border-top:2px solid ${data.primaryColor};">
@@ -1418,8 +1461,11 @@
                                 <div style="font-size:8px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:3px;">Empresa</div>
                                 <div style="font-size:0.75rem;font-weight:600;color:${data.secondaryColor};">${data.company}</div>
                             </div>
-                            <div class="glass-card" style="padding:0.8rem 1rem;border-left:3px solid #4ade80;display:flex;align-items:center;">
-                                <div style="font-size:1.2rem;font-weight:900;color:#4ade80;">2026</div>
+                            <div class="glass-card" style="padding:0.8rem 1rem;border-left:3px solid var(--color-neon-green);display:flex;align-items:center;">
+                                <div style="padding-right:1rem;border-right:1px solid rgba(255,255,255,0.15);margin-right:1rem;">
+                                    <div style="font-size:8px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1px;">Experiencia</div>
+                                    <div style="font-size:1.2rem;font-weight:900;color:var(--color-neon-green);">2026</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1503,8 +1549,8 @@
                                 <span class="px-1.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[9px] font-black text-amber-500/90">4h</span>
                             </div>
                             <div>
-                                <h4 class="text-amber-500 font-bold text-sm uppercase tracking-wider mb-1">Identificación deuda técnica</h4>
-                                <p class="text-white/50 text-xs">Mapeo de sistemas legacy y silos de código que requieren modernización prioritaria. <span class="text-[9px] font-black uppercase text-amber-500/60 ml-1">(Opcional)</span></p>
+                                <h4 class="text-neon-amber font-bold text-sm uppercase tracking-wider mb-1">Identificación deuda técnica</h4>
+                                <p class="text-white/50 text-xs">Mapeo de sistemas legacy y silos de código que requieren modernización prioritaria. <span class="text-[9px] font-black uppercase text-neon-amber/60 ml-1">(Opcional)</span></p>
                             </div>
                         </div>
                         <div class="glass-card p-6 border-l-4 border-neon-cyan flex items-start gap-4">
@@ -1517,14 +1563,14 @@
                                 <p class="text-white/50 text-xs">Evaluación de habilidades y brechas en el equipo para la adopción de nuevas tecnologías.</p>
                             </div>
                         </div>
-                        <div class="glass-card p-6 border-l-4 border-amber-500 flex items-start gap-4">
+                        <div class="glass-card p-6 border-l-4 border-neon-amber flex items-start gap-4">
                             <div class="flex flex-col items-center gap-1.5 min-w-[32px]">
-                                <span class="text-amber-500 font-bold text-lg leading-none">04</span>
-                                <span class="px-1.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[9px] font-black text-amber-500/90">3h</span>
+                                <span class="text-neon-amber font-bold text-lg leading-none">04</span>
+                                <span class="px-1.5 py-0.5 rounded-full bg-neon-amber/10 border border-neon-amber/30 text-[9px] font-black text-neon-amber/90">3h</span>
                             </div>
                             <div>
-                                <h4 class="text-amber-500 font-bold text-sm uppercase tracking-wider mb-1">Value Stream Mapping (VSM)</h4>
-                                <p class="text-white/50 text-xs text-pretty">Mapeo detallado del proceso de entrega para identificar cuellos de botella optimizables. <span class="text-[9px] font-black uppercase text-amber-500/60 ml-1">(Opcional)</span></p>
+                                <h4 class="text-neon-amber font-bold text-sm uppercase tracking-wider mb-1">Value Stream Mapping (VSM)</h4>
+                                <p class="text-white/50 text-xs text-pretty">Mapeo detallado del proceso de entrega para identificar cuellos de botella optimizables. <span class="text-[9px] font-black uppercase text-neon-amber/60 ml-1">(Opcional)</span></p>
                             </div>
                         </div>
                     </div>
@@ -1570,19 +1616,19 @@
 
                         <!-- Module 3 -->
                         <div class="space-y-4">
-                            <h3 class="text-green-400 font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Módulo 3: DevSecOps</h3>
+                            <h3 class="text-neon-green font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Módulo 3: DevSecOps</h3>
                             <ul class="space-y-3 text-[11px] text-white/50">
-                                <li class="flex items-center justify-between"><span class="flex gap-2"><span class="text-green-400 font-bold">CI:</span> Seguridad y Automatización</span> <span class="px-1.5 py-0.5 rounded bg-green-400/10 border border-green-400/20 text-[9px] font-black text-green-400/80">4h</span></li>
-                                <li class="flex items-center justify-between"><span class="flex gap-2"><span class="text-green-400 font-bold">CD:</span> IaC y Estrategias de Despliegue</span> <span class="px-1.5 py-0.5 rounded bg-green-400/10 border border-green-400/20 text-[9px] font-black text-green-400/80">2h</span></li>
+                                <li class="flex items-center justify-between"><span class="flex gap-2"><span class="text-neon-green font-bold">CI:</span> Seguridad y Automatización</span> <span class="px-1.5 py-0.5 rounded bg-neon-green/10 border border-neon-green/20 text-[9px] font-black text-neon-green/80">4h</span></li>
+                                <li class="flex items-center justify-between"><span class="flex gap-2"><span class="text-neon-green font-bold">CD:</span> IaC y Estrategias de Despliegue</span> <span class="px-1.5 py-0.5 rounded bg-neon-green/10 border border-neon-green/20 text-[9px] font-black text-neon-green/80">2h</span></li>
                             </ul>
                         </div>
 
                         <!-- Module 4 -->
                         <div class="space-y-4">
-                            <h3 class="text-yellow-400 font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Módulo 4: Gobernanza y Riesgos</h3>
+                            <h3 class="text-neon-amber font-bold text-xs uppercase tracking-[0.2em] border-b border-white/10 pb-2">Módulo 4: Gobernanza y Riesgos</h3>
                             <div class="flex items-center justify-between text-[11px] text-white/50">
-                                <span class="flex gap-2"><span class="text-yellow-400 font-black">!</span> Privacidad, Alucinaciones y Guardrails</span>
-                                <span class="px-1.5 py-0.5 rounded bg-yellow-400/10 border border-yellow-400/20 text-[9px] font-black text-yellow-400/80">3h</span>
+                                <span class="flex gap-2"><span class="text-neon-amber font-black">!</span> Privacidad, Alucinaciones y Guardrails</span>
+                                <span class="px-1.5 py-0.5 rounded bg-neon-amber/10 border border-neon-amber/20 text-[9px] font-black text-neon-amber/80">3h</span>
                             </div>
                         </div>
                     </div>
