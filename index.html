@@ -484,6 +484,22 @@
             page-break-after: always !important;
             background: #050505 !important;
             margin-bottom: 0 !important;
+            /* Force fixed height for landscape export to let h-full children work */
+            height: 750px !important;
+            min-height: 750px !important;
+            width: 100% !important;
+        }
+
+        /* Disable complex filters during export to improve html2canvas reliability */
+        .pdf-no-filters .glass-card,
+        .pdf-no-filters .modal-card {
+            backdrop-filter: none !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .pdf-no-filters .ambient-bg,
+        .pdf-no-filters .grid-overlay {
+            display: none !important;
         }
     </style>
 </head>
@@ -1209,6 +1225,7 @@
 
             // Apply export mode styles to force vertical flow for all slides
             container.classList.add('pdf-export-mode');
+            document.body.classList.add('pdf-no-filters');
 
             const opt = {
                 margin: 0,
@@ -1226,6 +1243,8 @@
             };
 
             try {
+                // Brief delay to ensure styles are applied and content is ready
+                await new Promise(resolve => setTimeout(resolve, 500));
                 await html2pdf().set(opt).from(container).save();
             } catch (err) {
                 console.error('PDF Export Error:', err);
@@ -1233,6 +1252,7 @@
             } finally {
                 // Restore original state
                 container.classList.remove('pdf-export-mode');
+                document.body.classList.remove('pdf-no-filters');
 
                 toHide.forEach(sel => {
                     const el = document.querySelector(sel);
